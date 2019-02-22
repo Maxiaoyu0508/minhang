@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.cms.dao.ICmsChannelDao">
+	<resultMap type="cmsChannel" id="channelResultMap" extends="BaseBusLongEntity.entity">
+		<result column="C_NAME" property="name" />
+		<result column="C_REMARK" property="remark"/>
+		<result column="C_STATE" property="state"/>
+		<result column="C_IS_RIGHT" property="isRight"/>
+		<result column="C_IS_EN" property="isEn"/>
+		<result column="C_SORT" property="sort"/>
+		<result column="C_PARENT" property="parent" />
+		<result column="C_IS_PARENT" property="isParent" />
+		<result column="C_IS_DELETE" property="isDelete" />
+		<result column="C_CODENUM" property="codeNum" />
+		<result column="C_LEVEL" property="level" />
+		<result column="C_CMS_TEMPLATE_ID" property="cmsTemplateId" />
+	</resultMap>
+	
+	<sql id="allColumnSql">
+		<![CDATA[
+			c.ID,
+			c.C_NAME,
+			c.C_REMARK,
+			c.C_STATE,
+			c.C_IS_RIGHT,
+			c.C_IS_EN,
+			c.C_SORT,
+			c.C_PARENT,
+			c.C_IS_PARENT,
+			c.C_IS_DELETE,
+			c.C_CODENUM,
+			c.C_LEVEL,
+			c.C_CMS_TEMPLATE_ID
+		]]>
+	</sql>
+
+
+	<sql id="searchConditionSql">
+		<if test="condition.name != null and condition.name != ''">
+			AND c.C_NAME like CONCAT('%',#{condition.name},'%')
+		</if>
+		<if test="condition.parentBak != null and condition.parentBak != ''">
+			AND c.C_PARENT_BAK like CONCAT('%',#{condition.parentBak},'%')
+		</if>
+		<if test="condition.remark != null and condition.remark != ''">
+			AND c.C_REMARK like CONCAT('%',#{condition.remark},'%')
+		</if>
+		<if test="condition.codenum != null and condition.codenum != ''">
+			AND c.C_CODENUM like CONCAT('%',#{condition.codenum},'%')
+		</if>
+		<if test="condition.parent != null and condition.parent != ''">
+			AND c.C_PARENT like CONCAT('%',#{condition.parent},'%')
+		</if>
+	</sql>
+
+	<select id="listCmsChannelByCondition" resultMap="channelResultMap">
+		SELECT DISTINCT <include refid="allColumnSql"/>
+
+		FROM cms_channel c
+
+		WHERE 1=1 <include refid="searchConditionSql"/>
+	</select>
+	
+	<!-- 分页 -->
+	<select id="getChannelListByPage" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c 
+		WHERE c.C_DELETE_FLAG = 0 
+		ORDER BY c.C_SORT ASC 
+	</select>
+	
+	<!-- 根据栏目ID查询详细信息 -->
+	<select id="getCmsChannelById" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c 
+		WHERE c.C_DELETE_FLAG = 0 
+		AND c.ID = #{channelId}
+	</select>
+	
+	<!-- 总行数 -->
+	<select id="getChannelListByPageCount" resultType="int">
+		SELECT 
+		COUNT(1)
+		from cms_channel c
+		WHERE c.C_DELETE_FLAG = 0 
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="add" parameterType="cmsChannel" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+		INSERT INTO cms_channel (
+    C_NAME,
+    C_REMARK,
+    C_DELETE_FLAG,
+    C_STATE,
+    C_IS_RIGHT,
+    C_SORT,
+    C_PARENT,
+    C_CMS_TEMPLATE_ID
+    )
+		values(
+    #{name},
+    #{remark},
+    0,
+    2,
+    0,
+    #{sort},
+    #{parent},
+    #{cmsTemplateId}
+    )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="cmsChannel">
+		UPDATE cms_channel c SET
+		c.C_NAME = #{name},
+		c.C_REMARK = #{remark},
+		c.C_SORT = #{sort} ,
+		c.C_CMS_TEMPLATE_ID = #{cmsTemplateId}
+		WHERE c.ID = #{id}
+	</update>
+	
+	<!-- 查询所有栏目 -->
+	<select id="getCmsChannelAll" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c
+		WHERE c.C_DELETE_FLAG = 0 
+		ORDER BY c.C_SORT ASC 
+	</select>
+	
+		
+	<!-- 根据上级ID查询栏目列表 -->
+	<select id="listChannelByPid" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c
+		WHERE c.C_DELETE_FLAG = 0 
+		AND c.C_PARENT = #{value}
+		ORDER BY c.C_SORT ASC 
+	</select>
+	
+	<!-- 根据语言查询 -->
+	<select id="listChannelByIsEn" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c
+		WHERE c.C_DELETE_FLAG = 0 
+		AND c.C_IS_EN = #{isEn}
+		ORDER BY c.C_SORT ASC 
+	</select>
+	
+	<!-- 查询网站右侧栏目 -->
+	<select id="getCmsChannelRight" resultMap="channelResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_channel c
+		WHERE c.C_DELETE_FLAG = 0 
+		AND c.C_IS_RIGHT = 1 
+		ORDER BY c.C_SORT ASC 
+	</select>
+	
+	<delete id="delChannel">
+		DELETE FROM cms_channel WHERE ID = #{channelId}
+	</delete>
+	<update id="showRight">
+		UPDATE cms_channel a SET 
+		a.C_IS_RIGHT = #{isRight} 
+		WHERE a.ID IN 
+		<foreach collection="channelId" index="index" item="item" open="(" separator="," close=")">
+		  #{item}
+		</foreach> 
+	</update>
+	
+	<!-- 根据所属类别和上级类别编号查询 -->
+	<select id="getById" resultMap="channelResultMap">
+		SELECT
+		<include refid="allColumnSql" />
+		FROM CMS_CHANNEL c WHERE c.id = #{id}
+	</select>
+	
+	<select id="getMaxCodeNum" resultType="String">
+		SELECT MAX(c.C_CODENUM),MAX(c.C_SORT) FROM CMS_CHANNEL c WHERE
+		c.C_parent=#{value}
+	</select>
+
+<!--	<insert id="doAddCmsChannel" parameterType="Map">
+		INSERT INTO
+		CMS_CHANNEL(ID,C_NAME,C_PARENT,C_IS_PARENT,C_IS_DELETE,C_CODENUM,C_LEVEL,C_STATE,C_SORT,C_CREATE_DATE,C_DELETE_FLAG,C_IS_EN,C_REMARK)
+		VALUES(SYS_GUID(),#{name},#{parent},0,0,#{codeNum},#{level},#{state},#{sort},SYSDATE(),0,#{isEn},#{remark})
+	</insert>-->
+	<insert id="doAddCmsChannel" parameterType="cmsChannel" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+		INSERT INTO cms_channel (
+		C_NAME,
+		C_PARENT,
+		C_IS_PARENT,
+		C_IS_DELETE,
+		C_CODENUM,
+		C_LEVEL,
+		C_STATE,
+		C_SORT,
+		C_CREATE_DATE,
+		C_DELETE_FLAG,
+		C_IS_EN,
+		C_REMARK,
+		C_CMS_TEMPLATE_ID
+		)
+		values(
+		#{name},
+		#{parent},
+		0,
+		0,
+		#{codeNum},
+		#{level},
+		#{state},
+		#{sort},
+		SYSDATE(),
+		0,
+		#{isEn},
+		#{remark},
+		#{cmsTemplateId})
+	</insert>
+	
+	<select id="getCodeNum" resultType="String">
+		SELECT C.C_CODENUM FROM CMS_CHANNEL C WHERE
+		C.id=#{catId}
+	</select>
+	
+	<!-- 修改 -->
+	<update id="doUpdateCmsChannel" parameterType="Map">
+		UPDATE CMS_CHANNEL SET 
+			C_name = #{name},
+			C_REMARK = #{remark},
+			C_sort = #{sort},
+			C_CMS_TEMPLATE_ID = #{cmsTemplateId}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delCmsChannelById" >
+		delete from CMS_CHANNEL where id = #{id}
+	</delete>
+	
+	<!-- 修改是否为父节点，是否可删除 -->
+	<update id="updateChannelIsParentById">
+		UPDATE cms_channel c SET 
+		c.C_IS_PARENT = #{isParent} 
+		WHERE c.ID = #{id}
+	</update>
+	
+	<!-- 修改是否为父节点，是否可删除 -->
+	<update id="updateIsParentDeleteById">
+		UPDATE cms_channel c SET 
+		c.C_IS_PARENT = #{isParent}, 
+		c.C_IS_DELETE = #{isDelete} 
+		WHERE c.ID = #{id}
+	</update>
+	
+	<!-- 更新排序 -->
+	<update id="updateSort">
+		UPDATE cms_channel c SET 
+		C_SORT = #{sort}
+		WHERE ID = #{id}
+	</update>
+</mapper>

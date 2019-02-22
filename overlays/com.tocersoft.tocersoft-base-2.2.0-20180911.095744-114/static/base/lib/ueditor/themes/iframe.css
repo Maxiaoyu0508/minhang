@@ -1,0 +1,50 @@
+/*可以在这里添加你自己的css*/
+::-moz-selection{background:#e04d47;color:white;text-shadow:none}
+::selection{background:#e04d47;color:white;text-shadow:none}
+input::-ms-clear{display:none}
+:focus{outline:0}
+input:-webkit-autofill{background-color:#FAFFBD;background-image:none;color:#000}
+*{font-family:"microsoft yahei","Tahoma","arial"}
+html{color:#333;background:#FFF;font-size:12px}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;font-weight:normal}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:normal}
+ol,ul{list-style:none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+q:before,q:after{content:''}
+abbr,acronym{border:0;font-variant:normal}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}
+input,textarea,select{*
+	font-size:100%}
+.detail-bd-img{width:314px;margin:0 auto;margin-top:45px;display:block}
+.detail-bd-line{width:auto;height:4px;margin:31px auto 0;background:#e8e8e8;border-left:solid 49px #f39606}
+.detail-bd-brief{font:bold 16px/26px "microsoft yahei";color:#f39606;margin-bottom:15px}
+.detail-bd-briefbox{margin-top:10px}
+.detail-bd-breft-tt{font:14px/26px "microsoft yahei";color:#333333}
+.detail-bd-prise{width:402px;height:190px;border-left:solid 1px #dddddd;border-right:solid 1px #dddddd;margin-top:65px}
+.prise-title{font:24px/26px "microsoft yahei";color:#333333;text-align:center;margin-bottom:40px}
+.prise-grade li{font:14px/26px "microsoft yahei";color:#333333;text-align:center}
+.detail-sup li{font:14px/26px "microsoft yahei";color:#333333}
+.detail-bd-line-wd{width:90%;height:4px;margin:31px auto 0;background:#e8e8e8;border-left:solid 90px #f39606}
+.game-line{width:auto;margin-left:10px;border-left:1px solid #ddd}
+.game-dot-a{background:#f39606 none repeat scroll 0 0;border-radius:50%;height:13px;left:24px;position:absolute;left:-7px;top:10px;width:13px;z-index:200}
+.game-dot-b{background:#f39606 none repeat scroll 0 0;border-radius:50%;height:13px;left:24px;top:5px;position:absolute;width:13px;z-index:200}
+.game-massg{color:#333333;font:14px/36px "microsoft yahei";margin-left:30px;margin-top:1px}
+.game-line li{position:relative}
+.detail-bd-rtbox{width:23%;background:#fff}
+.lc-bx{background:#f39606;color:#fff;width:auto;height:44px;font:16px/44px "microsoft yahei";text-indent:20px;margin-top:20px}
+.lc-bx-p{padding:20px;background:#fff8ed;border-bottom:10px solid #e7dbc7}
+.bm-tj-bx{border:1px solid #ffd798;background:#fff8ed;margin-top:20px;padding:20px;border-radius:10px}
+.bm-tj-bx h1,.bm-cl-bx h1{color:#333;font:bold 16px/180% "microsoft yahei";margin-bottom:5px}
+.bm-cl-bx{border:1px dashed #aaa;margin-top:20px;padding:20px}
+.bm-cl-bx p,.bm-tj-bx p,.lc-bx-p p{font:14px/180% "microsoft yahei"}
+.line-wauto{width:auto;background:#f39606;height:1px;margin-top:50px}
+.line-bottom-bx{background:#fff;width:200px;margin:0 auto}
+.det-right-bx h1{color:#333;font:bold 18px/180% "microsoft yahei";margin:10px 0}
+.det-right-bx img{border:1px solid #ddd}
+.det-right-bx p{font:14px/180% "microsoft yahei";margin:10px 0}
+.det-right-bx span{font:12px/180% "microsoft yahei"}

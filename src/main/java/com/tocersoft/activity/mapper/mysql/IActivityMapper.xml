@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.activity.dao.IActivityDao">
+  <resultMap type="activity" id="activityResultMap" extends="BaseBusLongEntity.entity">
+    <!-- 活动标题 -->
+    <result property="name" column="C_NAME" />
+    <!-- 活动主图 -->
+    <result property="imageMain" column="C_IMAGE_MAIN" />
+    <!-- 列表缩略图 -->
+    <result property="imageThumb" column="C_IMAGE_THUMB" />
+    <!-- 活动地点 -->
+    <result property="address" column="C_ADDRESS" />
+    <!-- 活动时间说明 -->
+    <result property="timeNote" column="C_TIME_NOTE" />
+    <!-- 活动开始时间 -->
+    <result property="timeBegin" column="C_TIME_BEGIN" />
+    <!-- 活动结束时间 -->
+    <result property="timeEnd" column="C_TIME_END" />
+    <!-- 主办单位 -->
+    <result property="organizerMain" column="C_ORGANIZER_MAIN" />
+    <!-- 协办单位 -->
+    <result property="organizerSupport" column="C_ORGANIZER_SUPPORT" />
+    <!-- 报名说明 -->
+    <result property="enrollNote" column="C_ENROLL_NOTE" />
+    <!-- 报名名额 -->
+    <result property="enrollNum" column="C_ENROLL_NUM" />
+    <!-- 报名开始时间 -->
+    <result property="enrollTimeBegin" column="C_ENROLL_TIME_BEGIN" />
+    <!-- 报名结束时间 -->
+    <result property="enrollTimeEnd" column="C_ENROLL_TIME_END" />
+    <!-- 活动简介 -->
+    <result property="summary" column="C_SUMMARY" />
+    <!-- 活动介绍 -->
+    <result property="htmlDesc" column="C_HTML_DESC" />
+    <!-- 活动特色  -->
+    <result property="htmlFeature" column="C_HTML_FEATURE" />
+    <!-- 会议议程 -->
+    <result property="htmlAgenda" column="C_HTML_AGENDA" />
+    <!-- 出席嘉宾 -->
+    <result property="htmlGuests" column="C_HTML_GUESTS" />
+    <!-- 活动状态：0-草稿，1-预告，2-正在进行，3-已结束 -->
+    <result property="state" column="C_STATE" />
+    <!-- 活动类型 -->
+    <result property="type" column="C_TYPE" />
+    <!-- 排序 -->
+    <result property="sort" column="C_SORT" />
+    <!-- 活动单价 -->
+    <result property="unitPrice" column="C_UNIT_PRICE"/>
+      <!-- 活动ID -->
+      <result property="id" column="ID"/>
+      <!--二维码路径-->
+      <result property="qrCode" column="C_QR_CODE"/>
+
+  </resultMap>
+
+  <sql id="allColumnSql">
+    o.ID,
+    o.C_CREATE_BY,
+    o.C_CREATE_DATE,
+    o.C_UPDATE_BY,
+    o.C_UPDATE_DATE,
+    o.C_DELETE_FLAG,
+    o.C_NAME,
+    o.C_IMAGE_MAIN,
+    o.C_IMAGE_THUMB,
+    o.C_ADDRESS,
+    o.C_TIME_NOTE,
+    o.C_TIME_BEGIN,
+    o.C_TIME_END,
+    o.C_ORGANIZER_MAIN,
+    o.C_ORGANIZER_SUPPORT,
+    o.C_ENROLL_NOTE,
+    o.C_ENROLL_NUM,
+    o.C_ENROLL_TIME_BEGIN,
+    o.C_ENROLL_TIME_END,
+    o.C_SUMMARY,
+    o.C_HTML_DESC,
+    o.C_HTML_FEATURE,
+    o.C_HTML_AGENDA,
+    o.C_HTML_GUESTS,
+    o.C_STATE,
+    o.C_TYPE,
+    o.C_SORT,
+    o.C_UNIT_PRICE,
+    o.C_QR_CODE
+  </sql>
+
+  <sql id="searchConditionSql">
+	  <if test="condition.name != null and condition.name != ''">
+        AND o.C_NAME like CONCAT('%',#{condition.name},'%')
+	  </if>
+	  <if test="condition.imageMain != null and condition.imageMain != ''">
+        AND o.C_IMAGE_MAIN like CONCAT('%',#{condition.imageMain},'%')
+	  </if>
+	  <if test="condition.imageThumb != null and condition.imageThumb != ''">
+        AND o.C_IMAGE_THUMB like CONCAT('%',#{condition.imageThumb},'%')
+	  </if>
+	  <if test="condition.address != null and condition.address != ''">
+        AND o.C_ADDRESS like CONCAT('%',#{condition.address},'%')
+	  </if>
+	  <if test="condition.timeNote != null and condition.timeNote != ''">
+        AND o.C_TIME_NOTE like CONCAT('%',#{condition.timeNote},'%')
+	  </if>
+	  <if test="condition.enrollNote != null and condition.enrollNote != ''">
+        AND o.C_ENROLL_NOTE like CONCAT('%',#{condition.enrollNote},'%')
+	  </if>
+	  <if test="condition.enrollNum != null and condition.enrollNum != ''">
+        AND o.C_ENROLL_NUM like CONCAT('%',#{condition.enrollNum},'%')
+	  </if>
+	  <if test="condition.summary != null and condition.summary != ''">
+        AND o.C_SUMMARY like CONCAT('%',#{condition.summary},'%')
+	  </if>
+	  <if test="condition.htmlDesc != null and condition.htmlDesc != ''">
+        AND o.C_HTML_DESC like CONCAT('%',#{condition.htmlDesc},'%')
+	  </if>
+	  <if test="condition.htmlFeature != null and condition.htmlFeature != ''">
+        AND o.C_HTML_FEATURE like CONCAT('%',#{condition.htmlFeature},'%')
+	  </if>
+	  <if test="condition.htmlAgenda != null and condition.htmlAgenda != ''">
+        AND o.C_HTML_AGENDA like CONCAT('%',#{condition.htmlAgenda},'%')
+	  </if>
+	  <if test="condition.htmlGuests != null and condition.htmlGuests != ''">
+        AND o.C_HTML_GUESTS like CONCAT('%',#{condition.htmlGuests},'%')
+	  </if>
+--       查询状态不等于0的
+      <if test="condition.noEqualstate != null and condition.noEqualstate != ''">
+          AND o.C_STATE  &lt;&gt; 0
+      </if>
+      <if test="condition.activityId != null">
+          AND o.ID  &lt;&gt; #{condition.activityId}
+      </if>
+	  <if test="condition.timeBegin != null">
+  			AND <![CDATA[o.C_TIME_BEGIN >= #{condition.timeBegin} ]]> 
+	  </if>
+	   <if test="condition.timeEnd != null">
+  			AND <![CDATA[o.C_TIME_BEGIN < #{condition.timeEnd} ]]> 
+	  </if>
+  </sql>
+
+  <select id="listActivityAll" resultMap="activityResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity o
+  </select>
+  <select id="listActivityByPage" resultMap="activityResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    FROM activity o
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+  <select id="listActivityByPageCount" resultType="int">
+    SELECT count(DISTINCT o.ID) FROM activity o
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="getActivityById" resultMap="activityResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity o
+    WHERE o.ID = #{id}
+  </select>
+  
+  <select id="listActivityByCondition" resultMap="activityResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    FROM activity o
+    WHERE 1=1 <include refid="searchConditionSql"/>
+    <if test="condition.limit != null">
+	  	limit 0,#{condition.limit}
+	</if>
+  </select>
+
+  <insert id="add" parameterType="activity" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+    INSERT INTO activity
+    (
+    C_CREATE_BY,
+    C_CREATE_DATE,
+    C_UPDATE_BY,
+    C_UPDATE_DATE,
+    C_DELETE_FLAG,
+    C_NAME,
+    C_IMAGE_MAIN,
+    C_IMAGE_THUMB,
+    C_ADDRESS,
+    C_TIME_NOTE,
+    C_TIME_BEGIN,
+    C_TIME_END,
+    C_ORGANIZER_MAIN,
+    C_ORGANIZER_SUPPORT,
+    C_ENROLL_NOTE,
+    C_ENROLL_NUM,
+    C_ENROLL_TIME_BEGIN,
+    C_ENROLL_TIME_END,
+    C_SUMMARY,
+    C_HTML_DESC,
+    C_HTML_FEATURE,
+    C_HTML_AGENDA,
+    C_HTML_GUESTS,
+    C_STATE,
+    C_TYPE,
+    C_SORT,
+    C_UNIT_PRICE,
+    C_QR_CODE
+    )
+    VALUES
+    (
+     #{createBy},
+     SYSDATE(),
+     #{updateBy},
+     SYSDATE(),
+     0,
+     #{name},
+     #{imageMain},
+     #{imageThumb},
+     #{address},
+     #{timeNote},
+     #{timeBegin},
+     #{timeEnd},
+     #{organizerMain},
+     #{organizerSupport},
+     #{enrollNote},
+     #{enrollNum},
+     #{enrollTimeBegin},
+     #{enrollTimeEnd},
+     #{summary},
+     #{htmlDesc},
+     #{htmlFeature},
+     #{htmlAgenda},
+     #{htmlGuests},
+     #{state},
+     #{type},
+     #{sort},
+     #{unitPrice},
+     #{qrCode}
+    )
+  </insert>
+
+  <update id="update" parameterType="activity">
+    UPDATE activity SET
+    C_CREATE_BY = #{createBy},
+    C_CREATE_DATE = #{createDate},
+    C_UPDATE_BY = #{updateBy},
+    C_UPDATE_DATE = #{updateDate},
+    C_DELETE_FLAG = #{deleteFlag},
+    C_NAME = #{name},
+    C_IMAGE_MAIN = #{imageMain},
+    C_IMAGE_THUMB = #{imageThumb},
+    C_ADDRESS = #{address},
+    C_TIME_NOTE = #{timeNote},
+    C_TIME_BEGIN = #{timeBegin},
+    C_TIME_END = #{timeEnd},
+    C_ORGANIZER_MAIN = #{organizerMain},
+    C_ORGANIZER_SUPPORT = #{organizerSupport},
+    C_ENROLL_NOTE = #{enrollNote},
+    C_ENROLL_NUM = #{enrollNum},
+    C_ENROLL_TIME_BEGIN = #{enrollTimeBegin},
+    C_ENROLL_TIME_END = #{enrollTimeEnd},
+    C_SUMMARY = #{summary},
+    C_HTML_DESC = #{htmlDesc},
+    C_HTML_FEATURE = #{htmlFeature},
+    C_HTML_AGENDA = #{htmlAgenda},
+    C_HTML_GUESTS = #{htmlGuests},
+    C_STATE = #{state},
+    C_TYPE = #{type},
+    C_SORT = #{sort},
+    C_UNIT_PRICE = #{unitPrice},
+    C_QR_CODE =  #{qrCode}
+    WHERE ID = #{id}
+  </update>
+
+  <delete id="delByIds">
+    DELETE FROM activity
+    WHERE ID IN
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+    <update id="updateQrCode" parameterType="activity">
+      UPDATE activity SET
+        C_QR_CODE = #{qrCode}
+        WHERE ID = #{id}
+    </update>
+</mapper>

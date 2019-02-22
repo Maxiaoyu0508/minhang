@@ -1,0 +1,9 @@
+FROM mvn.tocersoft.net:443/tocersoft/docker-base:1.1.0
+
+MAINTAINER zhangqiang zhangqiang@tocersoft.com
+
+VOLUME /app
+ADD target/minhang.war app.war
+RUN sh -c 'touch /app.war'
+ENV JAVA_OPTS="-Xms512m -Xmx1024m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -server"
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.war --spring.profiles.active=prod" ]

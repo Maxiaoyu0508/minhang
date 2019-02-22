@@ -1,0 +1,5 @@
+.load-tip{padding-top:20px;text-align:center;width:100px;margin:0 auto;background:url(images/onLoad.gif) 40px 2px no-repeat;}
+/* 左右分割条样式 */
+.lrSeparator{background-color:#A3BFDE;border-top:1px solid #A3BFDE;cursor:e-resize;font-size:1px;-moz-user-select:none;-webkit-user-select:none;} 
+/* 上下分割条样式 */ 
+.udSeparator{background-color:#A3BFDE;cursor:s-resize;font-size:1px;}

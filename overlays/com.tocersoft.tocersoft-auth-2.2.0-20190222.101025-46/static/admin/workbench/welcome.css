@@ -1,0 +1,178 @@
+.welcome{
+	width:700px;
+	margin:40px auto;
+	border:1px solid #879fb9;
+	padding:30px;
+	overflow:hidden;
+}
+.tit{
+	text-align:center;
+	font-size:18px;
+	font-weight:bold;
+	line-height:200%;
+	color:#52759b;
+}
+.desc{
+	text-align:center;
+	font-size:14px;
+	line-height:200%;
+}
+.version{
+	text-align:center;
+	font-size:12px;
+	line-height:200%;
+}
+.copyright{
+	text-align:center;
+	font-size:12px;
+	line-height:200%;
+}
+.index-left{
+	width:300px;
+	background-color: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.index-middle{
+	background-color:#fff; 
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.index-right{
+	width:350px;
+	background-color:#fff; 
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.left-title{
+	height:22px;
+	line-height:22px;
+	border-bottom:2px solid #6483A4;
+	background:#FFF;
+}
+.lt-name{
+	background:#6483A4;
+	color:#FFF;
+	height:22px;
+	line-height:22px;
+	display:inline-block;
+	font-weight:bold;
+	width:100px;
+	text-align:center;
+	margin-right:20px;
+}
+.lt-name:hover{
+	color:#FFF;
+	text-decoration:none;
+}
+.lt-unread{
+	color:#333;
+}
+.lt-read{
+	color:#333;
+}
+.lt-more{
+	color:#333;
+}
+.left-content{
+	padding:0 10px;
+	list-style:disc outside;
+	color:#CCC;
+}
+.left-content li{
+	height:25px;
+	line-height:25px;
+	padding:2px 0;
+	border-bottom:1px dashed #B5C8DC;
+}
+.index-content{
+	color:#333;
+	margin-right:5px;
+	overflow:hidden;
+	display:block;
+	float:left;
+	height:25px;
+}
+.left-content .new{
+	font-weight:bold;
+	background:url("../images/red-mail.png") right 2px no-repeat;
+	padding-right:30px;
+}
+.left-content .new:hover{
+	color:#FF6600;
+}
+.interval-10{
+	width:10px;
+	height:500px;
+}
+
+.welcome-right-title{
+	background: #d9dee4 none repeat scroll 0 0;
+    height: 27px;
+    line-height: 27px;
+    width: 100%;
+}
+.welcome-right-content{
+	background-color: #fff;
+    padding: 10px;
+}
+.work-date{
+	background-color:#f9f9f9;
+    border-left:5px solid #008fbf;
+    height:22px;
+    line-height:20px;
+    margin:5px 0 5px -5px;
+    padding:2px 0;
+    width:100%;
+}
+.rc-item{
+	height:25px;
+	line-height:25px;
+}
+.rc-item-name{
+	width:80px;
+	display:inline-block;
+}
+.rc-item-num{
+	text-decoration:underline;
+	width:60px;
+	display:inline-block;
+}
+.right-ul{
+	padding:0 10px;
+	list-style:disc outside;
+	color:#CCC;
+}
+.right-li-a{
+	color:#333;
+}
+
+.lc-oper{color:#999;}
+.task-progress{color:#999;}
+.task-ul{padding:0 5px 0 10px;color:#CCC;}
+.task-ul li{
+	height:25px;
+	line-height:25px;
+	padding:2px 0;
+	border-bottom:1px dotted #ddd;
+}
+.task-ul li:hover{
+	background-color:#f9f9f9; 
+}
+.task-priority{
+	display:block;
+	float:left;
+	width:16px;
+	height:16px;
+	background:#FF9900;
+	color:#fff;
+	text-align:center;
+	line-height:14px;
+	margin:5px 5px 0 0;
+}
+.welcome-btn{
+	height:18px;
+	line-height:18px;
+	margin-right: 5px;
+    margin-top: 3px;
+}
+
+.index-content-left{width:170px;}
+.left-text{color:#333;}

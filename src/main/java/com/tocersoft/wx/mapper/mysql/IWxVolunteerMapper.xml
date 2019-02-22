@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.wx.dao.IWxVolunteerDao">
+  <resultMap type="wxVolunteer" id="wxVolunteerResultMap" extends="BaseBusLongEntity.entity">
+    <!-- 类型（数据字典） -->
+    <result property="type" column="C_TYPE" />
+    <!-- 姓名 -->
+    <result property="name" column="C_NAME" />
+    <!-- 身份证 -->
+    <result property="idCard" column="C_ID_CARD" />
+    <!-- 性别：1-男，2-女； -->
+    <result property="sex" column="C_SEX" />
+    <!-- 年龄 -->
+    <result property="age" column="C_AGE" />
+    <!-- 学校 -->
+    <result property="school" column="C_SCHOOL" />
+    <!-- 联系方式 -->
+    <result property="mobile" column="C_MOBILE" />
+    <!-- 地址 -->
+    <result property="address" column="C_ADDRESS" />
+    <!-- 邮箱 -->
+    <result property="email" column="C_EMAIL" />
+    <!-- 语种 -->
+    <result property="language" column="C_LANGUAGE" />
+    <!-- 服务时间 -->
+    <result property="servicrTime" column="C_SERVICR_TIME" />
+    <!-- 职务 -->
+    <result property="job" column="C_JOB" />
+    <!-- 学历 -->
+    <result property="education" column="C_EDUCATION" />
+    
+  </resultMap>
+
+  <sql id="allColumnSql">
+    o.ID,
+    o.C_TYPE,
+    o.C_NAME,
+    o.C_ID_CARD,
+    o.C_SEX,
+    o.C_AGE,
+    o.C_SCHOOL,
+    o.C_MOBILE,
+    o.C_ADDRESS,
+    o.C_EMAIL,
+    o.C_LANGUAGE,
+    o.C_SERVICR_TIME,
+    o.C_JOB,
+    o.C_EDUCATION
+  </sql>
+
+  <sql id="searchConditionSql">
+	  <if test="condition.name != null and condition.name != ''">
+        AND o.C_NAME like CONCAT('%',#{condition.name},'%')
+	  </if>
+	  <if test="condition.idCard != null and condition.idCard != ''">
+        AND o.C_ID_CARD like CONCAT('%',#{condition.idCard},'%')
+	  </if>
+	  <if test="condition.school != null and condition.school != ''">
+        AND o.C_SCHOOL like CONCAT('%',#{condition.school},'%')
+	  </if>
+	  <if test="condition.mobile != null and condition.mobile != ''">
+        AND o.C_MOBILE like CONCAT('%',#{condition.mobile},'%')
+	  </if>
+	  <if test="condition.address != null and condition.address != ''">
+        AND o.C_ADDRESS like CONCAT('%',#{condition.address},'%')
+	  </if>
+	  <if test="condition.email != null and condition.email != ''">
+        AND o.C_EMAIL like CONCAT('%',#{condition.email},'%')
+	  </if>
+	  <if test="condition.servicrTime != null and condition.servicrTime != ''">
+        AND o.C_SERVICR_TIME like CONCAT('%',#{condition.servicrTime},'%')
+	  </if>
+	  <if test="condition.job != null and condition.job != ''">
+        AND o.C_JOB like CONCAT('%',#{condition.job},'%')
+	  </if>
+	  <if test="condition.education != null and condition.education != ''">
+        AND o.C_EDUCATION like CONCAT('%',#{condition.education},'%')
+	  </if>
+      <if test="condition.searchKey != null and condition.searchKey != ''">
+        AND (o.C_NAME like CONCAT('%',#{condition.searchKey},'%')OR
+         o.C_ID_CARD like CONCAT('%',#{condition.searchKey},'%'))
+      </if>
+  </sql>
+
+  <select id="listWxVolunteerAll" resultMap="wxVolunteerResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM wx_volunteer o
+  </select>
+
+  <select id="listWxVolunteerByPage" resultMap="wxVolunteerResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    
+    FROM wx_volunteer o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+  
+  <select id="listWxVolunteerByPageCount" resultType="int">
+    SELECT count(DISTINCT o.ID) FROM wx_volunteer o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="listWxVolunteerByCondition" resultMap="wxVolunteerResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    
+    FROM wx_volunteer o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="getWxVolunteerById" resultMap="wxVolunteerResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM wx_volunteer o
+    WHERE o.ID = #{id}
+  </select>
+
+  <insert id="add" parameterType="wxVolunteer" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+    INSERT INTO wx_volunteer
+    (
+    C_TYPE,
+    C_NAME,
+    C_ID_CARD,
+    C_SEX,
+    C_AGE,
+    C_SCHOOL,
+    C_MOBILE,
+    C_ADDRESS,
+    C_EMAIL,
+    C_LANGUAGE,
+    C_SERVICR_TIME,
+    C_JOB,
+    C_EDUCATION
+    )
+    VALUES
+    (
+     #{type},
+     #{name},
+     #{idCard},
+     #{sex},
+     #{age},
+     #{school},
+     #{mobile},
+     #{address},
+     #{email},
+     #{language},
+     #{servicrTime},
+     #{job},
+     #{education}
+    )
+  </insert>
+
+  <update id="update" parameterType="wxVolunteer">
+    UPDATE wx_volunteer SET
+    C_TYPE = #{type},
+    C_NAME = #{name},
+    C_ID_CARD = #{idCard},
+    C_SEX = #{sex},
+    C_AGE = #{age},
+    C_SCHOOL = #{school},
+    C_MOBILE = #{mobile},
+    C_ADDRESS = #{address},
+    C_EMAIL = #{email},
+    C_LANGUAGE = #{language},
+    C_SERVICR_TIME = #{servicrTime},
+    C_JOB = #{job},
+    C_EDUCATION = #{education}
+    WHERE ID = #{id}
+  </update>
+
+  <delete id="delByIds">
+    DELETE FROM wx_volunteer
+    WHERE ID IN
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>

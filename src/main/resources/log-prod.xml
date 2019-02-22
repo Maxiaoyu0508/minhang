@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off" monitorInterval="1800">
+  <properties>
+    <property name="LOG_PATH">/app/logs</property>
+    <property name="LOG_NAME">web</property>
+  </properties>
+  <appenders>
+    <console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%date{yyyy-MM-dd HH:mm:ss,SSS}] %level [%c{10}:%line] - %msg%n"/>
+    </console>
+    <RollingFile name="ProductionLog" fileName="${LOG_PATH}/${LOG_NAME}.log"
+                 filePattern="${LOG_PATH}/${LOG_NAME}.%d{yyyy-MM-dd}.log">
+      <PatternLayout pattern="[%date{yyyy-MM-dd HH:mm:ss,SSS}] %level [%c{10}:%line] - %msg%n"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="100 MB"/>
+      </Policies>
+    </RollingFile>
+  </appenders>
+
+  <loggers>
+    <root level="all">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="ProductionLog"/>
+    </root>
+    <logger name="com.tocersoft" level="info"/>
+    <logger name="com.alibaba.druid" level="warn"/>
+    <logger name="druid.sql" level="debug"/>
+    <logger name="java.sql.Connection" level="warn"/>
+    <logger name="java.sql.PreparedStatement" level="warn"/>
+    <logger name="java.sql.ResultSet" level="warn"/>
+    <logger name="druid.sql.DataSource" level="warn"/>
+    <logger name="druid.sql.Connection" level="warn"/>
+    <logger name="druid.sql.Statement" level="warn"/>
+    <logger name="druid.sql.ResultSet" level="warn"/>
+    <logger name="org.apache" level="warn"/>
+    <logger name="org.hibernate" level="warn"/>
+    <logger name="org.springframework" level="warn"/>
+    <logger name="org.springframework.web" level="warn"/>
+    <logger name="org.springframework.data.redis" level="warn"/>
+    <logger name="org.mybatis" level="info"/>
+    <logger name="org.mybatis.spring" level="error"/>
+    <logger name="org.apache.ibatis" level="warn"/>
+    <logger name="org.eclipse.jetty" level="warn"/>
+    <logger name="jndi" level="info"/>
+    <logger name="io.netty" level="info"/>
+    <logger name="reactor" level="info" />
+  </loggers>
+</configuration>

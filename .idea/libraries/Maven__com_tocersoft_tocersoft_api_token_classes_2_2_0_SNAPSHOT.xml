@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.tocersoft:tocersoft-api-token:classes:2.2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-api-token/2.2.0-SNAPSHOT/tocersoft-api-token-2.2.0-20180916.143659-19-classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-api-token/2.2.0-SNAPSHOT/tocersoft-api-token-2.2.0-20180916.143659-19-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-api-token/2.2.0-SNAPSHOT/tocersoft-api-token-2.2.0-20180916.143659-19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

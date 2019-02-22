@@ -1,0 +1,63 @@
+$(document).ready(function(){
+	$('.checkbox_false_full').live('mouseenter',function(){
+		$(this).addClass('checkbox_false_full_focus');
+	});
+	$('.checkbox_false_part').live('mouseenter',function(){
+		$(this).addClass('checkbox_false_part_focus');
+	});
+	$('.checkbox_true_full').live('mouseenter',function(){
+		$(this).addClass('checkbox_true_full_focus');
+	});
+	$('.checkbox_true_part').live('mouseenter',function(){
+		$(this).addClass('checkbox_true_part_focus');
+	});
+	
+	$('.checkbox_false_full').live('mouseout',function(){
+		$(this).removeClass('checkbox_false_full_focus');
+		$(this).removeClass('checkbox_false_part_focus');
+		$(this).removeClass('checkbox_true_full_focus');
+		$(this).removeClass('checkbox_true_part_focus');
+	});
+	$('.checkbox_false_part').live('mouseout',function(){
+		$(this).removeClass('checkbox_false_full_focus');
+		$(this).removeClass('checkbox_false_part_focus');
+		$(this).removeClass('checkbox_true_full_focus');
+		$(this).removeClass('checkbox_true_part_focus');
+	});
+	$('.checkbox_true_full').live('mouseout',function(){
+		$(this).removeClass('checkbox_false_full_focus');
+		$(this).removeClass('checkbox_false_part_focus');
+		$(this).removeClass('checkbox_true_full_focus');
+		$(this).removeClass('checkbox_true_part_focus');
+	});
+	$('.checkbox_true_part').live('mouseout',function(){
+		$(this).removeClass('checkbox_false_full_focus');
+		$(this).removeClass('checkbox_false_part_focus');
+		$(this).removeClass('checkbox_true_full_focus');
+		$(this).removeClass('checkbox_true_part_focus');
+	});
+	
+	$('.checkbox_false_full').live('click',function(){
+		$(this).removeClass('checkbox_false_full');
+		$(this).addClass('checkbox_true_full');
+		$(this).addClass('checkbox_true_full_focus');
+	});
+	$('.checkbox_false_part').live('click',function(){
+		$(this).removeClass('checkbox_false_part');
+		$(this).addClass('checkbox_true_full');
+		$(this).addClass('checkbox_true_full_focus');
+	});
+	$('.checkbox_true_full').live('click',function(){
+		$(this).removeClass('checkbox_true_full');
+		$(this).removeClass('checkbox_true_full_focus');
+		$(this).addClass('checkbox_false_full');
+		$(this).addClass('checkbox_false_full_focus');
+	});
+	$('.checkbox_true_part').live('click',function(){
+		$(this).removeClass('checkbox_true_part');
+		$(this).removeClass('checkbox_true_part_focus');
+		$(this).addClass('checkbox_false_full');
+		$(this).addClass('checkbox_false_full_focus');
+	});
+});
+

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.tocersoft:tocersoft-cms:war:2.2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-cms/2.2.0-SNAPSHOT/tocersoft-cms-2.2.0-20190109.183927-67.war!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-cms/2.2.0-SNAPSHOT/tocersoft-cms-2.2.0-20190109.183927-67-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-cms/2.2.0-SNAPSHOT/tocersoft-cms-2.2.0-20190109.183927-67-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

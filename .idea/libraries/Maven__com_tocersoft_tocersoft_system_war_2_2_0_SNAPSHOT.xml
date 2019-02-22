@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.tocersoft:tocersoft-system:war:2.2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-system/2.2.0-SNAPSHOT/tocersoft-system-2.2.0-20190115.163327-97.war!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-system/2.2.0-SNAPSHOT/tocersoft-system-2.2.0-20190115.163327-97-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-system/2.2.0-SNAPSHOT/tocersoft-system-2.2.0-20190115.163327-97-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

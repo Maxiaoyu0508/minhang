@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.activity.dao.IActivitySessionDao">
+  <resultMap type="activitySession" id="activitySessionResultMap" extends="BaseBusLongEntity.entity">
+    <!-- 活动日期 -->
+    <result property="activityDate" column="C_ACTIVITY_DATE" />
+    <!-- 活动ID -->
+    <result property="activityId" column="C_ACTIVITY_ID" />
+    <!-- 活动场次 -->
+    <result property="session" column="C_SESSION" />
+    <!-- 限定人数 -->
+    <result property="limitederson" column="C_LIMITED_PERSON" />
+    
+  </resultMap>
+
+  <sql id="allColumnSql">
+    o.ID,
+    o.C_CREATE_BY,
+    o.C_CREATE_DATE,
+    o.C_UPDATE_BY,
+    o.C_UPDATE_DATE,
+    o.C_DELETE_FLAG,
+    o.C_ACTIVITY_DATE,
+    o.C_ACTIVITY_ID,
+    o.C_SESSION,
+    o.C_LIMITED_PERSON
+  </sql>
+
+  <sql id="searchConditionSql">
+	  <if test="condition.session != null and condition.session != ''">
+        AND o.C_SESSION like CONCAT('%',#{condition.session},'%')
+	  </if>
+    <if test="condition.activityId != null and condition.activityId != ''">
+      AND o.C_ACTIVITY_ID like CONCAT('%',#{condition.activityId},'%')
+    </if>
+    <if test="condition.activityDate != null ">
+      AND o.C_ACTIVITY_DATE like CONCAT('%',#{condition.activityDate},'%')
+    </if>
+  </sql>
+
+  <select id="listActivitySessionAll" resultMap="activitySessionResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity_session o
+  </select>
+
+  <select id="listActivitySessionByPage" resultMap="activitySessionResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    
+    FROM activity_session o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+  
+  <select id="listActivitySessionByPageCount" resultType="int">
+    SELECT count(DISTINCT o.ID) FROM activity_session o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="listActivitySessionByCondition" resultMap="activitySessionResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    
+    FROM activity_session o
+    
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="getActivitySessionById" resultMap="activitySessionResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity_session o
+    WHERE o.ID = #{id}
+  </select>
+
+  <insert id="add" parameterType="activitySession" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+    INSERT INTO activity_session
+    (
+    C_CREATE_BY,
+    C_CREATE_DATE,
+    C_UPDATE_BY,
+    C_UPDATE_DATE,
+    C_DELETE_FLAG,
+    C_ACTIVITY_DATE,
+    C_ACTIVITY_ID,
+    C_SESSION,
+    C_LIMITED_PERSON
+    )
+    VALUES
+    (
+     #{createBy},
+     SYSDATE(),
+     #{updateBy},
+     SYSDATE(),
+     0,
+     #{activityDate},
+     #{activityId},
+     #{session},
+     #{limitederson}
+    )
+  </insert>
+
+  <update id="update" parameterType="activitySession">
+    UPDATE activity_session SET
+    C_UPDATE_BY = #{updateBy},
+    C_UPDATE_DATE = SYSDATE(),
+    C_ACTIVITY_DATE = #{activityDate},
+    C_ACTIVITY_ID = #{activityId},
+    C_SESSION = #{session},
+    C_LIMITED_PERSON = #{limitederson}
+    WHERE ID = #{id}
+  </update>
+
+  <delete id="delByIds">
+    DELETE FROM activity_session
+    WHERE ID IN
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>

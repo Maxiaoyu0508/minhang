@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+project:
+  code: minhang
+  name: 闵行博物馆网站与微信项目
+  company: 万达信息
+  version: 1.0.0
+  website: http://www.tocersoft.com
+  component:
+    packages: com.tocersoft
+  tocer:
+    dialect: mysql
+    entity:
+      packages: com.tocersoft
+    mapper:
+      packages: com.tocersoft
+
+server:
+  servlet:
+    path: /

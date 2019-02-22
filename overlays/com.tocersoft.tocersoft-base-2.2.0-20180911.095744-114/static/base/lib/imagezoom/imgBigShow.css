@@ -1,0 +1,105 @@
+.box {
+	width:590px;
+}
+
+.tb-pic a {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.tb-pic a img {
+	vertical-align: middle;
+}
+
+.tb-pic a {
+	*display: block;
+	*font-family: Arial;
+	*line-height: 1;
+}
+
+.tb-thumb {
+	overflow: hidden;
+}
+
+.tb-thumb li {
+	width:78px;
+	height:56px;
+	border:1px solid #ddd;
+	margin-bottom:10px;
+	cursor:pointer;
+	margin:1px 1px 10px 1px;
+}
+.tb-thumb .tb-selected {
+	width:78px;
+	height:56px;
+	border: 2px solid #ff6f5e;
+	margin:0px 0px 9px 0px;
+}
+
+.tb-s310,.tb-s310 a {
+	height:460px;
+	width:460px;
+}
+
+.tb-s310,.tb-s310 img {
+	max-height: 460px;
+	max-width: 460px;
+}
+
+.tb-s310 a {
+	*font-size: 271px;
+}
+
+.tb-s40 a {
+	*font-size: 35px;
+}
+
+
+.tb-booth {
+	position: relative;
+	z-index: 1;
+}
+
+
+.tb-thumb .tb-selected div {
+	background-color: #FFFFFF;
+	border: medium none;
+}
+
+
+
+.tb-s40,.tb-s40 a {
+	width:78px;
+	height:56px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+}
+.tb-s40,.tb-s40 a img{
+	text-align:center;
+	vertical-align:middle;
+	max-width:78px;
+	max-height:56px;
+}
+
+div.zoomDiv {
+	z-index: 999;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 200px;
+	height: 200px;
+	background: #ffffff;
+	border: 1px solid #CCCCCC;
+	display: none;
+	text-align: center;
+	overflow: hidden;
+}
+
+div.zoomMask {
+	position: absolute;
+	background: url("../images/mask.png") repeat scroll 0 0 transparent;
+	cursor: move;
+	z-index: 1;
+}

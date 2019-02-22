@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.cms.dao.ICmsArticleDao">
+	<resultMap type="cmsArticle" id="articleResultMap" extends="BaseBusLongEntity.entity">
+		<result column="C_NAME" property="name" />
+		<result column="C_CONTENT" property="content"/>
+		<result column="C_CREATE_DATE" property="createDate"/>
+		<result column="C_CREATE_BY" property="createBy"/>
+		<result column="C_UPDATE_DATE" property="updateDate"/>
+		<result column="C_UPDATE_BY" property="updateBy"/>
+		<result column="C_CHANNEL_ID" property="channelId"/>
+		<result column="C_CHANNEL_NAME" property="channelName"/>
+		<result column="C_TITLE" property="title"/>
+		<result column="C_SUMMARY" property="summary"/>
+		<result column="STATE" property="state"/>
+		<result column="SORT" property="sort"/>
+		<result column="IS_PUBLISH" property="isPublish"/>
+		<result column="C_READ_NUM" property="readNum"/>
+		<result column="C_LIKE_NUM" property="likeNum"/>
+		<result column="C_CREATE_NAME" property="createName"/>
+		<result column="C_KEYWORD" property="keyword"/>
+		<result column="C_KEYWORD2" property="keyword2"/>
+		<result column="C_KEYWORD3" property="keyword3"/>
+		<result column="C_PATH" property="path"/>
+		<result column="C_FILENAME" property="filename"/>
+		<result column="C_AUTHOR" property="author"/>
+		<result column="C_SOURCE" property="source"/>
+		<result column="C_COLLECT_NUM" property="collectNum"/>
+		<result column="column_article_id" property="columnArticleId"/>
+		<!--浏览次数-->
+		<result column="C_BROWSETIME" property="browseTime"/>
+		<!--点赞次数-->
+		<result column="C_SPOTTIME" property="spotTime"/>
+		<!--展览时间-->
+		<result column="C_EXHIBITIONTIME" property="exhibitionTime"/>
+		<!--展览地点-->
+		<result column="C_EXHIBITIONPLACE" property="exhibitionPlace"/>
+		<!--3D展览-->
+		<result column="C_THREEDIMENSIONSEXHIBITION" property="threeDimensionsExhibition"/>
+
+		<result column="C_IS_RECOMMEND" property="isRecommend"/>
+		<!-- 排序参数，用于上一篇下一篇的查询 -->
+		<result column="C_SORT_INDEX" property="sortIndex"/>
+		<!-- 发布时间 -->
+		<result column="C_PUBLISH_DATE" property="publishDate"/>
+		<result column="C_FACE_PATH" property="memberFacePath"/>
+		<!-- 页面链接ID -->
+		<result column="C_CMS_TEMPLATE_ID" property="cmsTemplateId" />
+		<!-- 文章评论数量 -->
+		<result column="commentCount" property="commentCount"/>
+		<association property="cmsChannel" column="C_CHANNEL_ID" select="com.tocersoft.cms.dao.ICmsChannelDao.getCmsChannelById" />
+	</resultMap>
+	
+	<resultMap type="cmsArticle" id="columnArticleResultMap" extends="BaseBusLongEntity.entity">
+		<result column="C_NAME" property="name" />
+		<result column="C_CONTENT" property="content"/>
+		<result column="createDate" property="createDate"/>
+		<result column="C_CREATE_BY" property="createBy"/>
+		<result column="C_UPDATE_DATE" property="updateDate"/>
+		<result column="C_UPDATE_BY" property="updateBy"/>
+		<result column="C_CHANNEL_ID" property="channelId"/>
+		<result column="C_CHANNEL_NAME" property="channelName"/>
+		<result column="C_SUMMARY" property="summary"/>
+		<result column="STATE" property="state"/>
+		<result column="SORT" property="sort"/>
+		<result column="IS_PUBLISH" property="isPublish"/>
+		<result column="C_READ_NUM" property="readNum"/>
+		<result column="C_LIKE_NUM" property="likeNum"/>
+		<result column="C_CREATE_NAME" property="createName"/>
+		<result column="C_KEYWORD" property="keyword"/>
+		<result column="C_KEYWORD2" property="keyword2"/>
+		<result column="C_KEYWORD3" property="keyword3"/>
+		<result column="C_PATH" property="path"/>
+		<result column="C_FILENAME" property="filename"/>
+		<result column="C_AUTHOR" property="author"/>
+		<result column="C_SOURCE" property="source"/>
+		<result column="C_COLLECT_NUM" property="collectNum"/>
+		<result column="column_article_id" property="columnArticleId"/>
+		<result property="sort" column="C_SORT"/>
+		<!-- 博主名称 -->
+		<result property="blogName" column="blogName"/>
+	</resultMap>
+	
+	<sql id="allColumnSql">
+		<![CDATA[
+			a.* , 
+			c.C_NAME as C_CHANNEL_NAME,
+			u.C_NAME as C_CREATE_NAME
+		]]>
+	</sql>
+
+	<sql id="allListColumnSql">
+		<![CDATA[
+			a.* ,
+			c.C_NAME as C_CHANNEL_NAME
+		]]>
+	</sql>
+<sql id="allListQuestionsColumnSql">
+		<![CDATA[
+			a.* ,
+			c.C_NAME as C_CHANNEL_NAME,
+			cq.C_TITLE as C_TITLE
+		]]>
+	</sql>
+
+	<sql id="artListColumnSql">
+		<![CDATA[
+			a.ID,
+			a.C_NAME,
+			a.C_CHANNEL_ID,
+			a.C_CREATE_DATE,
+			a.STATE,
+			a.SORT,
+			a.IS_PUBLISH,
+			a.C_AUTHOR,
+			a.C_SOURCE,
+			a.C_SUMMARY,
+			a.C_UPDATE_DATE,
+			a.C_PATH,
+			a.C_CONTENT,
+			a.C_SORT_INDEX,
+			a.C_PUBLISH_DATE,
+			a.C_CMS_TEMPLATE_ID,
+			a.C_BROWSETIME,
+			a.C_SPOTTIME,
+			a.C_EXHIBITIONTIME,
+			a.C_EXHIBITIONPLACE，
+			a.C_THREEDIMENSIONSEXHIBITION
+		]]>
+	</sql>
+	
+	<sql id="artDetailColumnSql">
+		<![CDATA[
+			a.ID,
+			a.C_NAME,
+			a.C_CHANNEL_ID,
+			a.C_CREATE_DATE,
+			a.C_UPDATE_DATE,
+			a.C_CONTENT,
+			a.STATE,
+			a.SORT,
+			c.C_NAME as C_CHANNEL_NAME,
+			a.IS_PUBLISH,
+			a.C_AUTHOR,
+			a.C_SOURCE,
+			a.C_SORT_INDEX,
+			a.C_PUBLISH_DATE,
+			a.C_CMS_TEMPLATE_ID,
+			a,C_BROWSETIME,
+			a,C_SPOTTIME,
+			a.C_EXHIBITIONTIME,
+			a.C_EXHIBITIONPLACE,
+			a.C_THREEDIMENSIONSEXHIBITION
+		]]>
+	</sql>
+	
+	<sql id="searchByPageConditionSql">
+	 	<if test=" condition.allChannelId != null">
+	 		<!-- 查询该专栏下括的所有的文章包所有子目录的文章 -->
+		 	<![CDATA[
+		 	and FIND_IN_SET(a.C_CHANNEL_ID,CMS_CHANNEL_RECURRENCE(#{condition.allChannelId}))
+		 	]]>
+		 </if>
+		<if test="condition.columnId != null and condition.sectionId != null">
+			<!-- 查询该专栏下的栏目已经有的文章 -->
+			and a.id not in 
+			(
+				select o2.C_ARTICLE_ID from cms_column_article o2 
+				where o2.C_COLUMN_ID = #{condition.columnId}
+				and o2.C_COLUMN_SECTION = #{condition.sectionId}
+			)
+		</if>
+		<if test="condition.tagId != null">
+			<!-- 查询该标签下已经有的文章 -->
+			and a.id not in 
+			(
+				select o2.C_ARTICLE_ID from cms_article_tag o2 
+				where o2.C_TAG_ID = #{condition.tagId}
+			)
+		</if>
+		<if test=" condition.channelId != null">
+			<![CDATA[
+		  	and a.C_CHANNEL_ID = #{condition.channelId}
+		  	]]>
+		</if>
+		<if test=" condition.isRecommend != null">
+			<![CDATA[
+		  	and a.C_IS_RECOMMEND = #{condition.isRecommend}
+		  	]]>
+		</if>
+		 <if test=" condition.articleName != null and condition.articleName != '' ">
+		 	<![CDATA[
+		 	 and a.C_NAME like CONCAT('%',#{condition.articleName},'%')
+		 	]]>
+		 </if>
+		 <if test=" condition.keyword != null and condition.keyword != '' ">
+		 	<![CDATA[
+		 	 and ( a.C_NAME like CONCAT('%',#{condition.keyword},'%')
+		 	]]>
+		 </if>
+		 <if test=" condition.keyword2 != null and condition.keyword2 != '' ">
+		 	<![CDATA[
+		 	 or a.C_NAME like CONCAT('%',#{condition.keyword2},'%')
+		 	]]>
+		 </if>
+		 <if test=" condition.keyword3 != null and condition.keyword3 != '' ">
+		 	<![CDATA[
+		 	 or a.C_NAME like CONCAT('%',#{condition.keyword3},'%')
+		 	]]>
+		 </if>
+		 <if test="condition.keyword != null and condition.keyword != '' ">
+		 	 <![CDATA[
+				 )
+		 	]]>
+		 </if>
+		 <if test=" condition.key != null and condition.key != '' ">
+		 	<![CDATA[
+		 	 and ( a.C_NAME like CONCAT('%',#{condition.key},'%') or a.C_SUMMARY like CONCAT('%',#{condition.key},'%') ) 
+		 	]]>
+		 </if>
+  		 <if test=" condition.createDateBegin != null and condition.createDateBegin != '' ">
+		 	<![CDATA[
+		 	 and C_CREATE_DATE  >= #{condition.createDateBegin}
+		 	]]>
+		 </if>
+  		 <if test=" condition.createDateEnd != null and condition.createDateEnd != '' ">
+		 	<![CDATA[
+		 	 and C_CREATE_DATE  <= #{condition.createDateEnd}
+		 	]]>
+		 </if>
+		 <if test=" condition.isPublish != null and condition.isPublish != -1 ">
+		 	<![CDATA[
+		 	 and IS_PUBLISH  = #{condition.isPublish}
+		 	]]>
+		 </if>
+		<!-- 类型（博主/自媒体） -->
+		 <if test=" condition.authorType != null">
+			<![CDATA[
+		  	and ca.C_TYPE = #{condition.authorType}
+		  	]]>
+		</if>
+		 <if test=" condition.escapeSymbol ">
+		 	<![CDATA[
+		 	ESCAPE '/'
+		 	]]>
+		 </if>
+		 <if test="condition.state != null">
+			AND a.STATE = #{condition.state}
+		 </if>
+		 <if test="condition.states != null and condition.states.length > 0">
+			AND a.STATE in 
+			<foreach collection="condition.states" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</sql>
+	
+	<sql id="searchHotConditionSql">
+		<!-- <if test=" condition.time != null and condition.time != '' ">
+			and o.C_CREATE_DATE &lt;= '${condition.time}'
+		</if>
+		<if test=" condition.lastTime != null and condition.lastTime != '' ">
+			and o.C_CREATE_DATE >= '${condition.lastTime}'
+		</if> -->
+		<if test=" condition.time != null and condition.time != '' ">
+			and year(o.C_CREATE_DATE) = year(CURDATE()) 
+			and week(o.C_CREATE_DATE) = week(CURDATE())
+		</if>
+	</sql>
+	
+	<sql id="listArticleCondition">
+		<if test="condition.createBy != null and condition.createBy != ''">
+			AND o.C_CREATE_BY = #{condition.createBy}
+		</if>
+		<if test="condition.state != null">
+			AND o.STATE = #{condition.state}
+		</if>
+		<if test="condition.cmsChannel != null and condition.cmsChannel.size() > 0">
+			AND o.C_CHANNEL_ID in 
+			<foreach collection="condition.cmsChannel" index="index" item="channel" open="(" separator="," close=")">
+				#{channel.id}
+			</foreach>
+		</if>
+		<if test="condition.channelId != null">
+			AND o.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.tagId != null">
+			AND o1.C_TAG_ID = #{condition.tagId}
+		</if>
+		<if test="condition.tagIdList != null and condition.tagIdList.size() > 0">
+			AND o1.C_TAG_ID IN
+			<foreach collection="condition.tagIdList" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="condition.keyList != null and condition.keyList.size() > 0">
+			AND
+			<foreach collection="condition.keyList" index="index" item="item" open="(" separator="or" close=")">
+				o.C_NAME like '%${item}%' or o2.C_NAME like '%${item}%'
+			</foreach>
+		</if>
+		<if test="condition.isRecommend != null">
+			<![CDATA[
+		  	AND o.C_IS_RECOMMEND = #{condition.isRecommend}
+		  	]]>
+		</if>
+		<if test="condition.key != null and condition.key != ''">
+			AND (
+				o.C_NAME like '%${condition.key}%'
+				or
+				o2.C_NAME like '%${condition.key}%'
+				)
+		</if>
+		<if test="condition.cmsTagList != null and condition.cmsTagList.size() > 0">
+			AND o1.C_TAG_ID in 
+			<foreach collection="condition.cmsTagList" index="index" item="item" open="(" separator="," close=")">
+				#{item.id}
+			</foreach>
+		</if>
+		<if test="condition.articleList != null and condition.articleList.size() > 0">
+			AND o.ID IN 
+			<foreach collection="condition.articleList" index="index" item="item" open="(" separator="," close=")">
+				#{item.id}
+			</foreach>
+		</if>
+		<if test=" condition.articleId != null">
+			<![CDATA[
+			and o.ID <> #{condition.articleId}
+			]]>
+		</if>
+		AND o.IS_PUBLISH = 1
+	</sql>
+	
+	<select id="listCmsArticleByPage" resultMap="articleResultMap">
+		select o.* 
+		from cms_article o
+		left join cms_article_tag o1 on o.id = o1.C_ARTICLE_ID
+		left join cms_tag o2 on o1.C_TAG_ID = o2.id
+		where 1=1
+		<include refid="listArticleCondition" />
+		group by o.id
+		<if test="condition.cmsTagList != null and condition.cmsTagList.size() > 0 and condition.createDateScheme != 1 and condition.readNumScheme != 1">
+			order by rand()
+		</if>
+		<if test="(condition.cmsTagList == null or condition.cmsTagList.size() == 0) and condition.createDateScheme != 1 and condition.readNumScheme != 1">
+			order by o.SORT asc ,o.C_CREATE_DATE desc
+		</if>
+		<!-- 按照创建时间排序  -->
+		<if test="condition.createDateScheme == 1">
+			order by o.C_CREATE_DATE desc
+		</if>
+		<!-- 按照点击量排序 -->
+		<if test="condition.readNumScheme == 1">
+			order by o.C_READ_NUM desc
+		</if>
+	</select>
+	
+	<select id="listCmsArticleByPageCount" resultType="int">
+		select count(1) from (
+			select o.id 
+			from cms_article o
+			left join cms_article_tag o1 on o.id = o1.C_ARTICLE_ID
+			left join cms_tag o2 on o1.C_TAG_ID = o2.id
+			where 1=1
+			<include refid="listArticleCondition" />
+			group by o.id
+		) m
+	</select>
+	
+	<select id="listCmsArticleRecomend" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article o
+		WHERE 1=1
+		AND o.C_CHANNEL_ID = #{channelId}
+		AND o.IS_PUBLISH = 1
+		AND o.C_IS_RECOMMEND = 1
+		ORDER BY RAND(),o.C_READ_NUM desc
+		LIMIT #{limit}
+	</select>
+	
+	<select id="listCmsArticleByRecomend" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article o
+		WHERE 1=1
+		AND o.IS_PUBLISH = 1
+		<if test="condition.isRecommend != null">
+			AND o.C_IS_RECOMMEND = #{condition.isRecommend}
+		</if>
+		ORDER BY o.SORT asc,o.C_CREATE_DATE desc
+		LIMIT #{limit}
+	</select>
+	
+	<!-- 最近更新 -->
+	<select id="listCmsArticleByBestNew" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article o
+		WHERE 1=1
+		AND o.IS_PUBLISH = 1
+		ORDER BY o.C_CREATE_DATE desc
+		LIMIT #{limit}
+	</select>
+	
+	<!-- 一周热点 -->
+	<select id="listCmsArticleByBestWeek" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article o
+		WHERE 1=1
+		AND o.IS_PUBLISH = 1 and 1=1  <include refid="searchHotConditionSql" />
+		ORDER BY o.C_READ_NUM desc
+		LIMIT #{limit}
+	</select>
+	
+	<select id="listCmsArticleByHot" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article o
+		WHERE 1=1
+		AND o.IS_PUBLISH = 1
+		ORDER BY o.C_READ_NUM desc
+		LIMIT #{limit}
+	</select>
+	
+	<select id="listCmsColumnArticleByPageAndSection" resultMap="columnArticleResultMap">
+		SELECT 
+			a.ID,
+			a.C_NAME,
+			a.C_CHANNEL_ID,
+			a.C_CREATE_DATE,
+			a.STATE,
+			a.IS_PUBLISH,
+			a.C_AUTHOR,
+			a.C_SOURCE,
+			a.C_SUMMARY,
+			a.C_UPDATE_DATE,
+			a.C_READ_NUM,
+			a.C_LIKE_NUM,
+			o1.id as column_article_id,
+			o1.C_SORT as sort
+		FROM cms_article a
+		left join cms_column_article o1 on a.id = o1.C_ARTICLE_ID
+		WHERE 1=1 
+		 <if test="condition.columnId != null">
+			AND o1.C_COLUMN_ID = #{condition.columnId}
+		 </if>
+		 <if test="condition.sectionId != null">
+			AND o1.C_COLUMN_SECTION = #{condition.sectionId}
+		 </if>
+		 order by o1.C_SORT asc
+	</select>
+	
+	<select id="listCmsColumnArticleByPageAndSectionCount" resultType="int">
+		SELECT count(a.id) 
+		FROM cms_article a
+		left join cms_column_article o1 on a.id = o1.C_ARTICLE_ID
+		WHERE 1=1 
+		 <if test="condition.columnId != null">
+			AND o1.C_COLUMN_ID = #{condition.columnId}
+		 </if>
+		 <if test="condition.sectionId != null">
+			AND o1.C_COLUMN_SECTION = #{condition.sectionId}
+		 </if>
+	</select>
+	
+	<select id="getCmsArticleByCmsArticleId" resultMap="articleResultMap">
+		SELECT 
+		a.*
+		FROM cms_article a
+		WHERE a.id = #{articleId}
+	</select>
+	
+	<!-- 根据栏目ID查询文章数量 -->
+	<select id="getArticleCount" resultType="int">
+		SELECT 
+		count(1)
+		FROM cms_article a
+		WHERE a.C_CHANNEL_ID = #{id}
+	</select>
+	
+	<!-- 分页 -->
+ 	<select id="getArticleListByPage" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID
+		WHERE a.C_DELETE_FLAG = 0
+		<![CDATA[ AND a.C_CHANNEL_ID != '-' ]]> 
+		<include refid="searchByPageConditionSql"/>
+		ORDER BY a.SORT ASC, a.C_PUBLISH_DATE DESC
+	</select>
+	
+	<!-- 博主文章的分页 -->
+ 	<select id="listBlogArticleListByPage" resultMap="articleResultMap">
+		select <include refid="artListColumnSql"/>,ca.C_NAME as blogName
+		from cms_article a
+		inner join cms_blog_article cb
+		on a.ID=cb.C_ARTICLE_ID
+		inner join cms_blog_author ca
+		on ca.ID=cb.C_AUTHOR_ID
+		WHERE a.C_DELETE_FLAG = 0 
+		AND cb.C_TYPE = #{condition.authorType}
+	</select>
+	
+	<select id="listBlogArticleListByPageCount" resultType="int">
+		SELECT 
+		count(1)
+		from cms_article a
+		inner join cms_blog_article cb
+		on a.ID=cb.C_ARTICLE_ID
+		inner join cms_blog_author ca
+		on ca.ID=cb.C_AUTHOR_ID
+		WHERE a.C_DELETE_FLAG = 0
+		AND cb.C_TYPE = #{condition.authorType}
+	</select>
+	
+	<!-- 分页按点击次数排列 -->
+ 	<select id="getArticleListByPageOrderByReady" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID
+		WHERE a.C_DELETE_FLAG = 0
+		<include refid="searchByPageConditionSql"/>
+		ORDER BY a.C_READ_NUM DESC 
+	</select>
+	
+	<!-- 总数 -->
+	<select id="getArticleListByPageCount" resultType="int">
+		SELECT 
+		COUNT(1) 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0
+		<include refid="searchByPageConditionSql"/>
+	</select> 
+	
+	<select id="getArticleByChannelId" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		AND a.C_CHANNEL_ID = #{channelId}
+		AND a.IS_PUBLISH = 1 
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC
+	</select>
+	
+	<select id="getArticleBySortIndex" resultMap="articleResultMap">
+		SELECT 
+		<include refid="artListColumnSql"/> 
+		from cms_article a
+		WHERE a.C_SORT_INDEX = #{sortIndex}
+		limit 0,1
+	</select>
+	
+	<select id="listArticleByChannelParentIdPageCount" resultType="int">
+		SELECT 
+		COUNT(1) 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		<if test="condition.channelId != null">
+		AND  a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.sortIndex != null">
+		  AND a.C_SORT_INDEX = #{condition.sortIndex}
+		</if>
+		AND a.IS_PUBLISH = 1 
+		<include refid="searchByPageConditionSql"/>
+		<if test="condition.parentChannelId != null">
+		AND a.C_CHANNEL_ID in (
+			select cc.ID from cms_channel cc where  cc.C_PARENT = #{condition.parentChannelId}
+		) or a.C_CHANNEL_ID = #{condition.parentChannelId}
+		</if>
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC
+	</select>
+	
+	
+	<select id="listArticleByChannelParentIdPage" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		<if test="condition.channelId != null">
+		AND  a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.sortIndex != null">
+		  AND a.C_SORT_INDEX = #{condition.sortIndex}
+		</if>
+		AND a.IS_PUBLISH = 1 
+		<include refid="searchByPageConditionSql"/>
+		<if test="condition.parentChannelId != null">
+		AND a.C_CHANNEL_ID in (
+			select cc.ID from cms_channel cc where  cc.C_PARENT = #{condition.parentChannelId}
+		) or a.C_CHANNEL_ID = #{condition.parentChannelId}
+		</if>
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC
+	</select>
+	
+	<select id="listArticleByChannelParentIdAll" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		<if test="condition.channelId != null">
+		AND  a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.sortIndex != null">
+		  AND a.C_SORT_INDEX = #{condition.sortIndex}
+		</if>
+		AND a.IS_PUBLISH = 1 
+		<include refid="searchByPageConditionSql"/>
+		<if test="condition.parentChannelId != null">
+		AND a.C_CHANNEL_ID in (
+			select cc.ID from cms_channel cc where  cc.C_PARENT = #{condition.parentChannelId}
+		) or a.C_CHANNEL_ID = #{condition.parentChannelId}
+		</if>
+		ORDER BY a.C_CHANNEL_ID ASC, a.SORT ASC, a.C_CREATE_DATE DESC
+	</select>
+	
+	
+	<!-- 自媒体热点关注 -->
+	<select id="listCmsArticleByWeekTop" resultMap="articleResultMap">
+		SELECT 
+			a.*
+		from cms_article a
+		LEFT JOIN cms_blog_article c ON a.id = c.C_ARTICLE_ID
+		left join cms_blog_author o1 on o1.id = c.C_AUTHOR_ID
+		WHERE a.C_DELETE_FLAG = 0 
+		AND a.IS_PUBLISH = 1 
+		and o1.C_TYPE = 2
+		and year(o1.C_CREATE_DATE) = year(CURDATE()) 
+		and week(o1.C_CREATE_DATE) = week(CURDATE())
+		ORDER BY a.C_READ_NUM desc
+	</select>
+		
+	<!-- 添加 -->
+	<insert id="doSave" parameterType="cmsArticle" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+		INSERT INTO cms_article (C_CREATE_BY,C_UPDATE_DATE
+			,C_NAME,C_CONTENT,C_DELETE_FLAG,C_CHANNEL_ID,C_CREATE_DATE,SORT,IS_PUBLISH , C_READ_NUM ,C_SUMMARY,C_KEYWORD,C_KEYWORD2,C_KEYWORD3,C_PATH,C_FILENAME
+			,C_AUTHOR, C_SOURCE,C_COLLECT_NUM,C_IS_RECOMMEND,C_PUBLISH_DATE,STATE,C_CMS_TEMPLATE_ID,C_EXHIBITIONTIME,C_EXHIBITIONPLACE,C_THREEDIMENSIONSEXHIBITION
+		)
+		values(#{createBy},SYSDATE()
+			,#{name},#{content},0,#{channelId},sysdate(),#{sort},1,0,#{summary},#{keyword},#{keyword2},#{keyword3},#{path},#{filename}
+			,#{author},#{source},0,0,#{publishDate},#{state},#{cmsTemplateId},#{exhibitionTime},#{exhibitionPlace},#{threeDimensionsExhibition}
+		)
+	</insert>
+		
+	
+	<!-- 修改 -->
+	<update id="doUpdate" parameterType="cmsArticle">
+		UPDATE cms_article c SET
+		c.C_NAME = #{name},
+		c.C_CONTENT = #{content},
+		c.C_CHANNEL_ID = #{channelId},
+		c.SORT = #{sort},
+		c.C_UPDATE_DATE = #{updateDate},
+		c.C_SUMMARY = #{summary},
+		c.C_KEYWORD = #{keyword},
+		c.C_KEYWORD2 = #{keyword2},
+		c.C_KEYWORD3 = #{keyword3},
+		c.C_READ_NUM = #{readNum},
+		c.C_PATH = #{path},
+		c.C_FILENAME = #{filename},
+		c.C_AUTHOR = #{author},
+		c.C_SOURCE = #{source},
+		c.C_UPDATE_BY = #{updateBy},
+		c.C_PUBLISH_DATE = #{publishDate},
+		c.C_UPDATE_DATE = SYSDATE(),
+		c.C_CMS_TEMPLATE_ID = #{cmsTemplateId},
+		c.C_BROWSETIME = #{browseTime},
+		c.C_SPOTTIME = #{spotTime},
+		c.C_EXHIBITIONPLACE = #{exhibitionPlace},
+		c.C_EXHIBITIONTIME = #{exhibitionTime},
+		c.C_THREEDIMENSIONSEXHIBITION = #{threeDimensionsExhibition}
+		WHERE c.ID = #{id}
+	</update>
+	
+	<!-- 阅读一次 -->
+	<update id="readOnce">
+		UPDATE cms_article c SET 
+		c.C_READ_NUM = c.C_READ_NUM + 1 
+		WHERE c.ID = #{articleId}
+	</update>
+	
+	<!-- 点赞一次 -->
+	<update id="likeOnce">
+		UPDATE cms_article c SET 
+		c.C_LIKE_NUM = c.C_LIKE_NUM + 1 
+		WHERE c.ID = #{articleId}
+	</update>
+	
+	<!-- 收藏一次 -->
+	<update id="collectOnce">
+		UPDATE cms_article c SET 
+		c.C_COLLECT_NUM = c.C_COLLECT_NUM + 1 
+		WHERE c.ID = #{articleId}
+	</update>
+	
+	<delete id="delArticle">
+		DELETE FROM cms_article WHERE ID IN
+		<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+		  #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 根据ID查询详细信息 -->
+	<select id="getArticleById" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID  
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 AND a.ID = #{id}
+	</select>
+	
+	<!-- 根据ID查询博主发布的文章详细信息 -->
+	<select id="getBlogArticleById" resultMap="articleResultMap">
+		SELECT 
+		<include refid="artListColumnSql"/> 
+		from cms_article a 
+		WHERE a.C_DELETE_FLAG = 0 AND a.ID = #{id}
+	</select>
+	
+	<select id="getArticleByArticleId" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID  
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 AND a.ID = #{id}
+	</select>
+	
+	<select id="listArticleByTagId" resultMap="articleResultMap">
+		SELECT 
+		a.*,u.C_NAME as C_CREATE_NAME
+		from cms_article a 
+		left join cms_article_tag o1 on a.id = o1.C_ARTICLE_ID
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		AND o1.C_TAG_ID = #{tagId}
+		ORDER BY a.SORT ,o1.C_UPDATE_DATE DESC
+		limit 0,9
+	</select>
+	
+	<!-- 每个标签下取最新的limit文章数据，并且保证文章数据不重复 -->
+	<select id="listArticleNewLimitByTagIdNotInArticle" resultMap="articleResultMap">
+		SELECT 
+		a.*,m.C_NAME as C_CREATE_NAME,c.C_NAME as C_CHANNEL_NAME,m.C_FACE_PATH
+		from cms_article a 
+		LEFT JOIN cms_channel c on c.ID = a.C_CHANNEL_ID
+		left join cms_article_tag o1 on a.id = o1.C_ARTICLE_ID
+		LEFT JOIN member_user m ON a.C_CREATE_BY = m.ID
+		WHERE a.C_DELETE_FLAG = 0 
+		AND o1.C_TAG_ID = #{tagId}
+		<if test="condition.articleList != null and condition.articleList.size() > 0">
+			AND a.ID not in 
+			<foreach collection="condition.articleList" index="index" item="item" open="(" separator="," close=")">
+				#{item.id}
+			</foreach>
+		</if>
+		<include refid="searchByPageConditionSql"/>
+		ORDER BY a.SORT ,o1.C_UPDATE_DATE DESC
+		limit 0,#{limit}
+	</select>
+	
+	<select id="listArticleByCidLimit" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		AND a.C_CHANNEL_ID = #{cid}
+		AND a.IS_PUBLISH = 1 
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC 
+		<if test=" limit != null and limit != 0 ">
+			LIMIT 0, #{limit}
+		</if>
+	</select>
+	
+	<select id="getArticleAll" resultMap="articleResultMap">
+		SELECT 
+		<include refid="artListColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		AND a.IS_PUBLISH = 1
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC 
+	</select>
+	
+	<!-- 查询类别下的最新发布的前几篇文章 -->
+	<select id="listNewArticleByCidLimit" resultMap="articleResultMap">
+		SELECT 
+		<include refid="allColumnSql"/> 
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		<if test="cid != null and cid != ''">
+			AND a.C_CHANNEL_ID = #{cid}
+		</if>
+		AND a.IS_PUBLISH = 1 
+		ORDER BY a.C_CREATE_DATE DESC 
+		<if test=" limit != null and limit != 0 ">
+			LIMIT 0, #{limit}
+		</if>
+	</select>
+	
+	<select id="listNewArticleByColumnIdLimit" resultMap="columnArticleResultMap">
+		SELECT o.*,u.C_NAME as author from cms_article o
+		LEFT JOIN cms_column_article o1 ON o.id = o1.C_ARTICLE_ID
+		LEFT JOIN auth_user u ON o.C_CREATE_BY = u.ID 
+		WHERE o.C_DELETE_FLAG = 0 
+		<if test="cid != null and cid != ''">
+			AND o1.C_COLUMN_SECTION = #{cid}
+		</if>
+		AND o1.C_COLUMN_ID = #{columnId}
+		AND o.IS_PUBLISH = 1 
+		ORDER BY o1.C_SORT asc 
+		<if test=" limit != null and limit != 0 ">
+			LIMIT 0, #{limit}
+		</if>
+	</select>
+	
+	<select id="listArticleDtbdByYearMonth" resultMap="columnArticleResultMap">
+		SELECT o.*,o1.C_CREATE_DATE as createDate from cms_article o
+		LEFT JOIN cms_column_article o1 ON o.id = o1.C_ARTICLE_ID
+		WHERE o.C_DELETE_FLAG = 0 
+		AND o1.C_COLUMN_SECTION = 1
+		AND o1.C_COLUMN_ID = #{columnId}
+		AND o.IS_PUBLISH = 1 
+		AND DATE_FORMAT(o1.C_CREATE_DATE,'%Y-%m') = #{ym}
+		ORDER BY o1.C_SORT asc 
+	</select>
+	
+	<select id="getCmsArticleClickRate" resultType="int">
+		SELECT 
+			sum(
+				(case when o.C_READ_NUM is null then 0 else o.C_READ_NUM end) 
+			)
+		FROM cms_article o
+		where o.C_DELETE_FLAG = 0
+	</select>
+	
+	<select id="getArticleByCondition" resultMap="articleResultMap">
+		select c.* 
+		from cms_article c 
+		where 1=1
+		<if test="parentId != null and parentId != ''">
+		and c.C_CHANNEL_ID = #{parentId}
+		</if>
+		order by c.C_CREATE_DATE 
+	</select>
+	
+	<update id="publish">
+		UPDATE cms_article a SET 
+		a.IS_PUBLISH = #{isPublish} 
+		WHERE a.ID IN 
+		<foreach collection="articleId" index="index" item="item" open="(" separator="," close=")">
+		  #{item}
+		</foreach> 
+	</update>
+	
+	<update id="recommend">
+		UPDATE cms_article a SET 
+		a.C_IS_RECOMMEND = #{isRecommend} 
+		WHERE a.ID IN 
+		<foreach collection="articleId" index="index" item="item" open="(" separator="," close=")">
+		  #{item}
+		</foreach> 
+	</update>
+	
+	<update id="updateState">
+		UPDATE cms_article a SET 
+		a.STATE = #{state} 
+		WHERE a.ID IN 
+		<foreach collection="articleId" index="index" item="item" open="(" separator="," close=")">
+		  #{item}
+		</foreach> 
+	</update>
+	
+	<update id="updateSort">
+		UPDATE cms_article SET 
+			SORT = #{condition.sort}
+		WHERE ID = #{condition.articleId}
+	</update>
+	
+	<update id="updateImagePath">
+		UPDATE cms_article SET 
+			C_PATH = #{item.path}
+		WHERE ID = #{item.id}
+	</update>
+	
+	<select id="getArticlePrev" resultMap="articleResultMap">
+		SELECT *
+		FROM cms_article c
+		WHERE 1=1 
+		<if test="mark != null">
+		 and c.C_SORT_INDEX &lt; #{mark}
+		</if>
+		<if test="parentId != null and parentId != ''">
+		and c.C_CHANNEL_ID = #{parentId}
+		</if>
+		ORDER BY c.C_CREATE_DATE DESC
+		LIMIT 0,1
+	</select>
+	
+	<select id="getArticleNext" resultMap="articleResultMap">
+		SELECT c.*
+		FROM cms_article c
+		WHERE 1=1
+		<if test="mark != null">
+		 and c.C_SORT_INDEX > #{mark}
+		</if>
+		<if test="parentId != null and parentId != ''">
+		and c.C_CHANNEL_ID = #{parentId}
+		</if>
+		ORDER BY c.C_CREATE_DATE
+		LIMIT 0,1
+	</select>
+	<select id="listArticleByChannelIdAndPage" resultMap="articleResultMap">
+		select c.* 
+		from cms_article c 
+		where 1=1
+		<if test="condition.parentChannelId != null and condition.parentChannelId != ''">
+		and c.C_CHANNEL_ID = #{condition.parentChannelId}
+		</if>
+		<if test="condition.publishDate != null">
+			AND DATE_FORMAT(c.C_PUBLISH_DATE,'%Y') = DATE_FORMAT(#{condition.publishDate},'%Y')
+		</if>
+		order by c.C_CREATE_DATE desc
+	</select>
+	<select id="listArticleByChannelIdAndPageCount" resultType="int">
+		select count(1) 
+		from cms_article c 
+		where 1=1
+		<if test="condition.parentChannelId != null and condition.parentChannelId != ''">
+		and c.C_CHANNEL_ID = #{condition.parentChannelId}
+		</if>
+		<if test="condition.publishDate != null">
+			AND DATE_FORMAT(c.C_PUBLISH_DATE,'%Y') = DATE_FORMAT(#{condition.publishDate},'%Y')
+		</if>
+		order by c.C_CREATE_DATE desc
+	</select>
+	
+	<select id="listArticleByChannelCodeLimit" resultMap="articleResultMap">
+		SELECT <include refid="allColumnSql"/> 
+		from cms_article a 
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID 
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID 
+		WHERE a.C_DELETE_FLAG = 0 
+		AND c.C_CODENUM LIKE CONCAT(#{channelCode},'%')
+		AND a.IS_PUBLISH = 1 
+		ORDER BY a.SORT ASC, a.C_CREATE_DATE DESC 
+		<if test=" limit != null and limit != 0 ">
+			LIMIT 0, #{limit}
+		</if>
+	</select>
+	
+	<select id="listArticleByCondition" resultMap="articleResultMap">
+		SELECT o.*,c.C_NAME as C_CHANNEL_NAME
+		from cms_article o 
+		LEFT JOIN cms_channel c ON o.C_CHANNEL_ID = c.ID
+		left join cms_article_tag o1 on o.id = o1.C_ARTICLE_ID
+		WHERE o.C_DELETE_FLAG = 0 AND o.IS_PUBLISH = 1 
+		<include refid="listArticleCondition"/>
+		group by o.ID
+		ORDER BY o.SORT ASC, o.C_CREATE_DATE DESC 
+	</select>
+
+	<select id="getFirstArticleByChannelId" resultMap="articleResultMap">
+		SELECT <include refid="artListColumnSql"/>
+		from cms_article a
+		LEFT JOIN cms_channel c ON a.C_CHANNEL_ID = c.ID
+		LEFT JOIN auth_user u ON a.C_CREATE_BY = u.ID
+		WHERE a.C_DELETE_FLAG = 0
+		AND a.C_CHANNEL_ID = #{condition.channelId}
+		ORDER BY a.ID ASC LIMIT 1
+	</select>
+
+	<select id="listArticleAndCommentByCondition" resultMap="articleResultMap">
+		SELECT a.*,count(mc.ID) AS commentCount
+		from cms_article a
+		LEFT JOIN member_comment mc ON mc.C_OBJECT_ID = a.ID
+		WHERE 1=1
+		<if test="condition.channelId != null and condition.channelId != ''">
+			AND a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.articleName != null and condition.articleName != ''">
+			AND a.C_NAME like CONCAT('%',#{condition.articleName},'%')
+		</if>
+		<if test="condition.articleId != null and condition.articleId != ''">
+			AND a.ID = #{condition.articleId}
+		</if>
+	</select>
+
+	<select id="listArticleAndCommentByPage" resultMap="articleResultMap">
+		SELECT a.*
+
+		FROM cms_article a
+		LEFT JOIN member_comment mc ON mc.C_OBJECT_ID = a.ID
+		WHERE 1=1
+		<if test="condition.channelId != null and condition.channelId != ''">
+			AND a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.articleName != null and condition.articleName != ''">
+			AND a.C_NAME like CONCAT('%',#{condition.articleName},'%')
+		</if>
+		<if test="condition.articleId != null and condition.articleId != ''">
+			AND a.ID = #{condition.articleId}
+		</if>
+	</select>
+
+	<select id="listArticleAndCommentByPageCount" resultType="int">
+		SELECT count(DISTINCT a.ID)
+		FROM cms_article a
+		LEFT JOIN member_comment mc ON mc.C_OBJECT_ID = a.ID
+		WHERE 1=1
+		<if test="condition.channelId != null and condition.channelId != ''">
+			AND a.C_CHANNEL_ID = #{condition.channelId}
+		</if>
+		<if test="condition.articleName != null and condition.articleName != ''">
+			AND a.C_NAME like CONCAT('%',#{condition.articleName},'%')
+		</if>
+		<if test="condition.articleId != null and condition.articleId != ''">
+			AND a.ID = #{condition.articleId}
+		</if>
+	</select>
+
+	<select id="listNewArticleByCondition" resultMap="articleResultMap">
+		SELECT <include refid="allListColumnSql"/>
+		from cms_article a
+		LEFT JOIN cms_channel c on c.ID = a.C_CHANNEL_ID
+		WHERE a.C_DELETE_FLAG = 0 AND c.C_NAME != #{channelName}
+		ORDER BY a.SORT ,a.C_UPDATE_DATE DESC
+		limit 0,#{limit}
+	</select>
+
+	<select id="listNewArticleQuestions" resultMap="articleResultMap">
+		SELECT <include refid="allListQuestionsColumnSql"/>
+		from cms_article a
+		LEFT JOIN cms_channel c on c.ID = a.C_CHANNEL_ID
+		left join cms_questions cq on cq.C_ID_BAK=a.C_ID_BAK
+		WHERE a.C_DELETE_FLAG = 0
+		ORDER BY a.SORT ,a.C_UPDATE_DATE DESC
+		limit 0,#{limit}
+	</select>
+	<update id="updateBrowseTime">
+		UPDATE cms_article SET
+		C_BROWSETIME = #{browseTime}
+		WHERE ID = #{details}
+	</update>
+	<update id="updateSpotTime">
+		UPDATE cms_article SET
+		C_SPOTTIME = #{spotTime}
+		WHERE ID = #{details}
+	</update>
+
+</mapper>

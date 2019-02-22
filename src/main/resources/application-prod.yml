@@ -1,0 +1,56 @@
+profile: prod_envrimont
+
+project:
+  runmode: singleton
+  singleton:
+    enterprise:
+  root-path: /app
+  deploy:
+    mode: docker
+
+server:
+  port: 8088
+  servlet:
+    domain-path:
+    context-path:
+    session:
+      timeout: 43200
+  jetty:
+    selectors: 1
+    acceptors: 2
+    max-http-post-size: 100000000
+    accesslog:
+      enabled: false
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      location:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      resolve-lazily: false
+
+datasource:
+  monitor:
+    username: druid
+    password: WyED1U5tAGgvlAiRHHcfCql1TFcN6s2ZzJDYkoYtiwJmwiihBjgwLh+SXurd5xIyWh7i47Orr47aOWcC04R4Fw==
+    decryptKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJVxkAgbxBEyDno6bEZY8nOlQWeDtSnr4TZaSSARB/Eh7/CrE/fXUME/qlaqT9CMTLlICootoVrkGOGENoyVJBMCAwEAAQ==
+  tocer:
+    driverClass: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.143:3306/minhang?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password:
+    decryptKey:
+    initialSize: 20
+    minIdle: 20
+    maxActive: 50
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+
+logging:
+  config: classpath:log-prod.xml

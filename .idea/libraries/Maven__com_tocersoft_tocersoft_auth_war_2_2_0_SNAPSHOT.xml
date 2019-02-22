@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.tocersoft:tocersoft-auth:war:2.2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-auth/2.2.0-SNAPSHOT/tocersoft-auth-2.2.0-20190222.101025-46.war!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-auth/2.2.0-SNAPSHOT/tocersoft-auth-2.2.0-20190222.101025-46-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-auth/2.2.0-SNAPSHOT/tocersoft-auth-2.2.0-20190222.101025-46-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,7 @@
+.tab-div{border-bottom:1px solid #88a0ba}
+.tab-btn{display:inline-block;padding:2px 15px;border:1px solid #88a0ba;text-decoration:none;position:relative;bottom:-1px;color:#000;height:22px;line-height:22px;text-align:center;}
+.tab-btn:hover{text-decoration:none;color:#000}
+.no-bg{background:none;border-bottom:1px solid white}
+.yes-bg{}
+.no-click{background:#eee;color:#999}
+.no-click:hover{background:#eee;color:#999}

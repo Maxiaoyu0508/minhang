@@ -1,0 +1,61 @@
+.onShow
+{
+    background:url(../images/onShow.gif) no-repeat; 
+    padding-left:25px; 
+    padding-right:5px;
+	margin-left:10px; 
+	font-size: 12px;
+	line-height:22px; 
+	vertical-align:middle;
+	display:inline-block;
+}
+.onFocus
+{
+    background:#E9F0FF url(../images/onFocus.gif) no-repeat;
+    padding-left:25px; 
+    padding-right:5px;
+	margin-left:10px; 
+	font-size: 12px;
+	line-height:22px; 
+	vertical-align:middle;
+	display:inline-block;
+}
+.onError
+{
+    background:#FFF2E9 url(../images/onError.gif) no-repeat;
+    padding-left:25px;
+    padding-right:5px;
+	margin-left:10px; 
+	font-size: 12px;
+	line-height:22px; 
+	vertical-align:middle;
+	display:inline-block;
+	width:auto;
+}
+.onCorrect
+{
+    background:#E9FFEB url(../images/onCorrect.gif) no-repeat left center;
+    padding-left:25px; 
+    padding-right:5px;
+	margin-left:10px; 
+	font-size: 12px;
+	line-height:22px; 
+	vertical-align:middle;
+	display:inline-block;
+}
+.onLoad
+{
+    background:#E9FFEB url(../images/onLoad.gif) no-repeat 3px 3px;
+    padding-left:25px;
+    padding-right:5px;
+	margin-left:10px; 
+	font-size: 12px;
+	line-height:22px; 
+	vertical-align:middle;
+	display:inline-block;
+} 
+
+.inputOnShow
+{
+	color: #999999
+}

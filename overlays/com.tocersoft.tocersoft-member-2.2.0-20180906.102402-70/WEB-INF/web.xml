@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  
+    					    http://java.sun.com/xml/ns/javaee/web-app_3.0.xsd">
+	<display-name>tocersoft-member</display-name>
+
+  <jsp-config>
+    <taglib>
+      <taglib-uri>http://www.tocersoft.com/jsp/tags/core</taglib-uri>
+      <taglib-location>/WEB-INF/tags/core.tld</taglib-location>
+    </taglib>
+    <taglib>
+      <taglib-uri>http://www.tocersoft.com/jsp/tags/function</taglib-uri>
+      <taglib-location>/WEB-INF/tags/cfn.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>fortune</web-resource-name>
+      <url-pattern>/*</url-pattern>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+      <http-method>HEAD</http-method>
+      <http-method>OPTIONS</http-method>
+      <http-method>TRACE</http-method>
+    </web-resource-collection>
+    <auth-constraint />
+  </security-constraint>
+	
+
+	<welcome-file-list>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+	
+</web-app>

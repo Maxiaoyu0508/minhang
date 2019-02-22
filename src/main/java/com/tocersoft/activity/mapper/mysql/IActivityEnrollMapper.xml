@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tocersoft.activity.dao.IActivityEnrollDao">
+  <resultMap type="activityEnroll" id="activityEnrollResultMap" extends="BaseBusLongEntity.entity">
+    <!-- 活动ID -->
+    <result property="activityId" column="C_ACTIVITY_ID" />
+    <!-- 联系人 -->
+    <result property="linkMan" column="C_LINK_MAN" />
+    <!-- 性别：0-女，1-男 -->
+    <result property="sex" column="C_SEX" />
+    <!-- 手机号码 -->
+    <result property="mobile" column="C_MOBILE" />
+    <!-- 固定电话 -->
+    <result property="telephone" column="C_TELEPHONE" />
+    <!-- 电子邮箱 -->
+    <result property="email" column="C_EMAIL" />
+    <!-- 报名时间 -->
+    <result property="enrollTime" column="C_ENROLL_TIME" />
+    <!-- 状态 0：未审核 1：审核通过 2：审核未通过 -->
+    <result property="state" column="C_STATE" />
+    <!-- 报名人数 -->
+    <result property="number" column="C_NUMBER"/>
+    <!-- 付款方式 -->
+    <result property="payState" column="C_PAY_STATE"/>
+    <!-- 总金额 -->
+    <result property="sumPrice" column="C_SUM_PRICE"/>
+    <!-- 会员ID -->
+    <result property="memberId" column="C_MEMBER_ID"/>
+    <!--活动场次Id-->
+    <result property="activitySessionId" column="C_ACTIVITY_SESSION"/>
+    <!-- 活动信息 -->
+    <association property="activity" column="C_ACTIVITY_ID" javaType="activity">
+        <id property="id" column="C_ACTIVITY_ID" />
+        <!-- 活动标题 -->
+	    <result property="name" column="C_NAME" />
+	    <!-- 活动主图 -->
+	    <result property="imageMain" column="C_IMAGE_MAIN" />
+	    <!-- 列表缩略图 -->
+	    <result property="imageThumb" column="C_IMAGE_THUMB" />
+	    <!-- 活动地点 -->
+	    <result property="address" column="C_ADDRESS" />
+	    <!-- 活动时间说明 -->
+	    <result property="timeNote" column="C_TIME_NOTE" />
+	    <!-- 活动开始时间 -->
+	    <result property="timeBegin" column="C_TIME_BEGIN" />
+	    <!-- 活动结束时间 -->
+	    <result property="timeEnd" column="C_TIME_END" />
+	    <!-- 主办单位 -->
+	    <result property="organizerMain" column="C_ORGANIZER_MAIN" />
+	    <!-- 协办单位 -->
+	    <result property="organizerSupport" column="C_ORGANIZER_SUPPORT" />
+	    <!-- 报名说明 -->
+	    <result property="enrollNote" column="C_ENROLL_NOTE" />
+	    <!-- 报名名额 -->
+	    <result property="enrollNum" column="C_ENROLL_NUM" />
+	    <!-- 报名开始时间 -->
+	    <result property="enrollTimeBegin" column="C_ENROLL_TIME_BEGIN" />
+	    <!-- 报名结束时间 -->
+	    <result property="enrollTimeEnd" column="C_ENROLL_TIME_END" />
+	    <!-- 活动简介 -->
+	    <result property="summary" column="C_SUMMARY" />
+	    <!-- 活动介绍 -->
+	    <result property="htmlDesc" column="C_HTML_DESC" />
+	    <!-- 活动特色  -->
+	    <result property="htmlFeature" column="C_HTML_FEATURE" />
+	    <!-- 会议议程 -->
+	    <result property="htmlAgenda" column="C_HTML_AGENDA" />
+	    <!-- 出席嘉宾 -->
+	    <result property="htmlGuests" column="C_HTML_GUESTS" />
+	    <!-- 活动状态：0-草稿，1-预告，2-正在进行，3-已结束 -->
+	    <result property="state" column="C_STATE" />
+	    <!-- 活动类型 -->
+	    <result property="type" column="C_TYPE" />
+	    <!-- 排序 -->
+	    <result property="sort" column="C_SORT" />
+    </association>
+    
+  </resultMap>
+
+  <sql id="allColumnSql">
+    o.ID,
+    o.C_CREATE_BY,
+    o.C_CREATE_DATE,
+    o.C_UPDATE_BY,
+    o.C_UPDATE_DATE,
+    o.C_DELETE_FLAG,
+    o.C_ACTIVITY_ID,
+    o.C_LINK_MAN,
+    o.C_SEX,
+    o.C_MOBILE,
+    o.C_TELEPHONE,
+    o.C_EMAIL,
+    o.C_ENROLL_TIME,
+    o.C_STATE,
+    o.C_NUMBER,
+    o.C_PAY_STATE,
+    o.C_SUM_PRICE,
+    o.C_MEMBER_ID,
+    o.C_ACTIVITY_SESSION
+  </sql>
+
+  <sql id="searchConditionSql">
+	  <if test="condition.activityId != null">
+        AND o.C_ACTIVITY_ID = #{condition.activityId}
+	  </if>
+	  <if test="condition.linkMan != null and condition.linkMan != ''">
+        AND o.C_LINK_MAN like CONCAT('%',#{condition.linkMan},'%')
+	  </if>
+	  <if test="condition.sex != null and condition.sex != ''">
+        AND o.C_SEX like CONCAT('%',#{condition.sex},'%')
+	  </if>
+	  <if test="condition.mobile != null and condition.mobile != ''">
+        AND o.C_MOBILE like CONCAT('%',#{condition.mobile},'%')
+	  </if>
+	  <if test="condition.telephone != null and condition.telephone != ''">
+        AND o.C_TELEPHONE like CONCAT('%',#{condition.telephone},'%')
+	  </if>
+	  <if test="condition.email != null and condition.email != ''">
+        AND o.C_EMAIL like CONCAT('%',#{condition.email},'%')
+	  </if>
+	  <if test="condition.memberId != null">
+	  	AND o.C_MEMBER_ID = #{condition.memberId}
+	  </if>
+	  <if test="condition.activityName != null and condition.activityName != ''">
+        AND o1.C_NAME like CONCAT('%',#{condition.activityName},'%')
+	  </if>
+  </sql>
+
+  <select id="listActivityEnrollAll" resultMap="activityEnrollResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity_enroll o
+  </select>
+  
+
+  <select id="listActivityEnrollByPage" resultMap="activityEnrollResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    ,o1.C_NAME as C_NAME,o1.C_TIME_BEGIN AS C_TIME_BEGIN
+    FROM activity_enroll o
+    LEFT JOIN activity o1 ON o.C_ACTIVITY_ID = o1.ID
+    WHERE 1=1 <include refid="searchConditionSql"/>
+    order by o.C_ENROLL_TIME desc
+  </select>
+  <select id="listActivityEnrollByPageCount" resultType="int">
+    SELECT count(DISTINCT o.ID) FROM activity_enroll o
+    LEFT JOIN activity o1 ON o.C_ACTIVITY_ID = o1.ID
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <select id="getActivityEnrollById" resultMap="activityEnrollResultMap">
+    SELECT <include refid="allColumnSql"/>
+    FROM activity_enroll o
+    WHERE o.ID = #{id}
+  </select>
+  
+  <select id="listActivityEnrollByCondition" resultMap="activityEnrollResultMap">
+    SELECT DISTINCT <include refid="allColumnSql"/>
+    ,o1.C_NAME as C_NAME,o1.C_TIME_BEGIN AS C_TIME_BEGIN
+    FROM activity_enroll o
+    LEFT JOIN activity o1 ON o.C_ACTIVITY_ID = o1.ID
+    WHERE 1=1 <include refid="searchConditionSql"/>
+  </select>
+
+  <insert id="add" parameterType="activityEnroll" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+    INSERT INTO activity_enroll
+    (
+    C_CREATE_BY,
+    C_CREATE_DATE,
+    C_UPDATE_BY,
+    C_UPDATE_DATE,
+    C_DELETE_FLAG,
+    C_ACTIVITY_ID,
+    C_LINK_MAN,
+    C_SEX,
+    C_MOBILE,
+    C_TELEPHONE,
+    C_EMAIL,
+    C_ENROLL_TIME,
+    C_STATE,
+    C_NUMBER,
+    C_PAY_STATE,
+    C_SUM_PRICE,
+    C_MEMBER_ID,
+    C_ACTIVITY_SESSION
+    )
+    VALUES
+    (
+     #{createBy},
+     SYSDATE(),
+     #{updateBy},
+     SYSDATE(),
+     0,
+     #{activityId},
+     #{linkMan},
+     #{sex},
+     #{mobile},
+     #{telephone},
+     #{email},
+     SYSDATE(),
+     #{state},
+     #{number},
+     #{payState},
+     #{sumPrice},
+     #{memberId},
+     #{activitySessionId}
+    )
+  </insert>
+
+  <update id="update" parameterType="activityEnroll">
+    UPDATE activity_enroll SET
+    C_UPDATE_BY = #{updateBy},
+    C_UPDATE_DATE = #{updateDate},
+    C_LINK_MAN = #{linkMan},
+    C_SEX = #{sex},
+    C_MOBILE = #{mobile},
+    C_TELEPHONE = #{telephone},
+    C_EMAIL = #{email},
+    C_ENROLL_TIME = #{enrollTime},
+    C_STATE = #{state},
+    C_NUMBER = #{number},
+    C_PAY_STATE = #{payState},
+    C_SUM_PRICE = #{sumPrice},
+    C_MEMBER_ID = #{memberId}
+    C_ACTIVITY_SESSION = #{activitySessionId}
+    WHERE ID = #{id}
+  </update>
+  
+  <update id="updateState" parameterType="activityEnroll">
+    UPDATE activity_enroll SET
+    C_UPDATE_BY = #{updateBy},
+    C_UPDATE_DATE = #{updateDate},
+    C_STATE = #{state}
+    WHERE ID = #{id}
+  </update>
+
+  <delete id="delByIds">
+    DELETE FROM activity_enroll
+    WHERE ID IN
+    <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+  
+  <delete id="delById">
+    DELETE FROM activity_enroll
+    WHERE ID = #{id}
+  </delete>
+</mapper>

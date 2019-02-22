@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.tocersoft:tocersoft-member:classes:2.2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-member/2.2.0-SNAPSHOT/tocersoft-member-2.2.0-20181213.165352-75-classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-member/2.2.0-SNAPSHOT/tocersoft-member-2.2.0-20181213.165352-75-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/software/maven/repository/com/tocersoft/tocersoft-member/2.2.0-SNAPSHOT/tocersoft-member-2.2.0-20181213.165352-75-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

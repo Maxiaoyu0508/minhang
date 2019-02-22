@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>Custom Function Tag</description>
+	<display-name>custom function tag</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>cfn</short-name>
+	<uri>http://www.tocersoft.com/jsp/tags/function</uri>
+
+	<function>
+		<description>输出默认值</description>
+		<display-name>defaultVal</display-name>
+		<name>defaultVal</name>
+		<function-class>com.tocersoft.base.web.tag.StringUtilTag</function-class>
+		<function-signature>java.lang.Object defaultVal(java.lang.Object)</function-signature>
+	</function>
+	<function>
+		<description>输出截取词追加省略号</description>
+		<display-name>ellipsis</display-name>
+		<name>ellipsis</name>
+		<function-class>com.tocersoft.base.web.tag.StringUtilTag</function-class>
+		<function-signature>java.lang.Object ellipsis(java.lang.String,java.lang.Integer,java.lang.Boolean)</function-signature>
+	</function>
+	<function>
+		<description>url encode</description>
+		<display-name>encode</display-name>
+		<name>encode</name>
+		<function-class>com.tocersoft.base.web.tag.StringUtilTag</function-class>
+		<function-signature>java.lang.String encode(java.lang.String,java.lang.String)</function-signature>
+	</function>
+	<function>
+		<description>url encode</description>
+		<display-name>url</display-name>
+		<name>url</name>
+		<function-class>com.tocersoft.base.web.tag.StringUtilTag</function-class>
+		<function-signature>java.lang.String getImageUrl(java.lang.String,java.lang.String)</function-signature>
+	</function>
+</taglib>
